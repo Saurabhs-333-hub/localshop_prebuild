@@ -54,7 +54,7 @@ const Login = () => {
         <>
             <div className="w-full flex flex-col justify-center items-center mt-24">
                 <h1 className='text-3xl font-bold'>Login</h1>
-                <form action="" className=' flex flex-col w-1/4 gap-2' onSubmit={handleSubmit}>
+                <form action="" className=' flex flex-col max-w-full gap-2' onSubmit={handleSubmit}>
                     <Card isBlurred className=" border-none bg-background/60 dark:bg-default-100/30  flex flex-col  gap-2 bg-gray-800  rounded-lg px-16 py-10 mt-10">
                         {error && <CardHeader className='text-red-700 text-ellipsis bg-danger-50 rounded-lg'>{error}</CardHeader>}
 
