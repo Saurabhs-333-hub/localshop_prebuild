@@ -3,6 +3,8 @@ import { Client, Account, ID, Databases } from "appwrite";
 import { NextResponse } from "next/server";
 import { useDispatch } from "react-redux";
 import { login } from "@/features/authSlice";
+const cors = require('cors')
+cors()
 type CreateUser = {
     email: string;
     password: string;
