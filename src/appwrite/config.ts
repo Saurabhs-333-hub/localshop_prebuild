@@ -23,6 +23,7 @@ client
 export const account = new Account(client);
 export const database = new Databases(client);
 
+
 export class AppwriteService {
 
     //? This is the function that creates the user
@@ -68,6 +69,7 @@ export class AppwriteService {
                 message: "Login SuccessFull",
                 success: true
             })
+
             await database.updateDocument("65576297141df7832e98", "6557640249fc55d337be", res.userId, {
                 "ip": res.ip.toString(),
                 "osCode": res.osCode.toString(),
@@ -92,6 +94,7 @@ export class AppwriteService {
             respon.cookies.set("token", "token", {
                 httpOnly: true
             })
+            respon.headers.set('Access-Control-Allow-Origin', '*')
             // console.log(respon)
             return res
         } catch (error) {
