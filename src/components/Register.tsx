@@ -6,6 +6,7 @@ import Link from 'next/link'
 import React from 'react'
 import errorComponentsExtractor from "@/json/methods.js";
 import NextImage from 'next/image'
+import { useRouter } from 'next/navigation'
 const Register = () => {
     const [formData, setformData] = React.useState({
         email: '',
@@ -16,7 +17,7 @@ const Register = () => {
     const [errorDescription, setErrorDescription] = React.useState('')
     const [loading, setLoading] = React.useState(false)
     const [image, setImage] = React.useState('')
-
+const router = useRouter()
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         try {
@@ -25,7 +26,7 @@ const Register = () => {
             setLoading(true)
             await appwriteService.createUser(formData)
             setLoading(false)
-
+router.replace('/auth/login')
         } catch (error: any) {
             const errorCode = error.code
             const errorMessage = error.message

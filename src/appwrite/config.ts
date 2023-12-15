@@ -117,7 +117,7 @@ export class AppwriteService {
     //? This is the function that logs the user out
     async logoutUser() {
         try {
-            await account.deleteSession("current");
+            await account.deleteSessions();
         } catch (error) {
             throw new Error(`Error logging out user: ${error}`);
         }
