@@ -26,7 +26,7 @@ export default function PageLayout({
         appwriteService.isLoggedIn()
             .then(setAuthStatus)
             .finally(() => setLoader(false));
-    }, []);
+    });
     return (
         <AuthProvider value={{ authStatus, setAuthStatus }}>
             <>
