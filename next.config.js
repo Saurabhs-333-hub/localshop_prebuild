@@ -22,7 +22,7 @@ const nextConfig = {
     //             destination: 'http://localhost:4000/:path*'
     //         }
     //     ]
-    // }
+    // }    
 }
 
 module.exports = nextConfig

@@ -1,5 +1,6 @@
 'use client'
 import appwriteService from '@/appwrite/config'
+import Modals from '@/widgets/Modal'
 import { Button, Card, CardFooter, CardHeader, Divider, Input } from '@nextui-org/react'
 import Link from 'next/link'
 import React from 'react'
@@ -36,7 +37,7 @@ const Register = () => {
                 <h1 className='text-3xl font-bold'>Register</h1>
                 <form action="" className=' flex flex-col max-w-full gap-2' onSubmit={handleSubmit}>
                     <Card isBlurred className=" border-none bg-background/60 dark:bg-default-100/30  flex flex-col  gap-2 bg-gray-800  rounded-lg px-16 py-10 mt-10">
-                        {error && <CardHeader className='text-red-700 text-ellipsis bg-danger-50 rounded-lg'>{error}</CardHeader>}
+                        {/* {error && <CardHeader className='text-red-700 text-ellipsis bg-danger-50 rounded-lg'>{error}</CardHeader>} */}
                         <Input type="text" label="Name" value={formData.name} isRequired onClear={() => {
                             setformData({ ...formData, name: '' })
                         }} isClearable onChange={(e) => {
@@ -65,6 +66,9 @@ const Register = () => {
                 <span className='mt-8'>
                     Already have an account? <Link href="/auth/login" className="text-blue-500">Login</Link>
                 </span>
+                {error && <Modals text={error} title={"Error"} bodyColor={
+                    'text-red-200'
+                } headerColor={'text-red-700'} footerColor={'bg-transparent'} />}
             </div>
         </>
     )
