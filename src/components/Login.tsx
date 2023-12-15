@@ -42,7 +42,6 @@ const Login = () => {
                 httpOnly: true,
             })
             router.replace('/')
-            console.log(res)
 
             return res
         } catch (error: any) {

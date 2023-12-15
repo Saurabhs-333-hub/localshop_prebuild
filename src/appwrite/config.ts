@@ -97,7 +97,6 @@ export class AppwriteService {
                 httpOnly: true
             })
             respon.headers.set('Access-Control-Allow-Origin', '*')
-            // console.log(respon)
             return res
         } catch (error) {
             throw new Error(`Error logging in user: ${error}`);
@@ -117,7 +116,7 @@ export class AppwriteService {
     //? This is the function that logs the user out
     async logoutUser() {
         try {
-            await account.deleteSessions();
+             account.deleteSession("current");
         } catch (error) {
             throw new Error(`Error logging out user: ${error}`);
         }
