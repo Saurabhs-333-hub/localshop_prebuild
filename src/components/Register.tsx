@@ -4,20 +4,22 @@ import Modals from '@/widgets/Modal'
 import { Button, Card, CardFooter, CardHeader, Divider, Input } from '@nextui-org/react'
 import Link from 'next/link'
 import React from 'react'
-
+import errorComponentsExtractor from "@/json/methods.js";
 const Register = () => {
     const [formData, setformData] = React.useState({
         email: '',
         password: '',
         name: ''
     })
-    const [error, setError] = React.useState('')
+    const [errorTitle, setErrorTitle] = React.useState('')
+    const [errorDescription, setErrorDescription] = React.useState('')
     const [loading, setLoading] = React.useState(false)
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         try {
-            setError('')
+            setErrorTitle('')
+            setErrorDescription('')
             setLoading(true)
             await appwriteService.createUser(formData)
             setLoading(false)
@@ -25,7 +27,9 @@ const Register = () => {
         } catch (error: any) {
             const errorCode = error.code
             const errorMessage = error.message
-            setError(errorMessage)
+            const { title, description }: any = errorComponentsExtractor(error.message)
+            setErrorTitle(title)
+            setErrorDescription(description)
             setLoading(false)
         } finally {
             setLoading(false)
@@ -66,7 +70,7 @@ const Register = () => {
                 <span className='mt-8'>
                     Already have an account? <Link href="/auth/login" className="text-blue-500">Login</Link>
                 </span>
-                {error && <Modals text={error} title={"Error"} bodyColor={
+                {errorTitle && <Modals text={errorDescription} title={errorTitle} bodyColor={
                     'text-red-200'
                 } headerColor={'text-red-700'} footerColor={'bg-transparent'} />}
             </div>

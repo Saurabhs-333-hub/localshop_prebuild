@@ -1,7 +1,9 @@
 'use client'
 import appwriteService from '@/appwrite/config'
 import { login } from '@/features/authSlice'
+import errorComponentsExtractor from '@/json/methods'
 import { AppDispatch } from '@/redux_material/store'
+import Modals from '@/widgets/Modal'
 import { Button, Card, CardFooter, CardHeader, Divider, Input } from '@nextui-org/react'
 import Link from 'next/link'
 import { redirect, useRouter } from 'next/navigation'
@@ -18,14 +20,16 @@ const Login = () => {
         email: '',
         password: '',
     })
-    const [error, setError] = React.useState('')
+    const [errorTitle, setErrorTitle] = React.useState('')
+    const [errorDescription, setErrorDescription] = React.useState('')
     const [loading, setLoading] = React.useState(false)
     const dispatch = useDispatch<AppDispatch>()
     const router = useRouter()
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         try {
-            setError('')
+            setErrorTitle('')
+            setErrorDescription('')
             setLoading(true)
             await appwriteService.loginUser(formData)
             dispatch(login(formData))
@@ -44,7 +48,9 @@ const Login = () => {
         } catch (error: any) {
             const errorCode = error.code
             const errorMessage = error.message
-            setError(errorMessage)
+            const { title, description }: any = errorComponentsExtractor(error.message)
+            setErrorTitle(title)
+            setErrorDescription(description)
             setLoading(false)
         } finally {
             setLoading(false)
@@ -56,7 +62,7 @@ const Login = () => {
                 <h1 className='text-3xl font-bold'>Login</h1>
                 <form action="" className=' flex flex-col max-w-full gap-2' onSubmit={handleSubmit}>
                     <Card isBlurred className=" border-none bg-background/60 dark:bg-default-100/30  flex flex-col  gap-2 bg-gray-800  rounded-lg px-16 py-10 mt-10">
-                        {error && <CardHeader className='text-red-700 text-ellipsis bg-danger-50 rounded-lg'>{error}</CardHeader>}
+                        {/* {error && <CardHeader className='text-red-700 text-ellipsis bg-danger-50 rounded-lg'>{error}</CardHeader>} */}
 
                         <Input type="email" label="Email" value={formData.email} isRequired onClear={() => {
                             setformData({ ...formData, email: '' })
@@ -81,6 +87,9 @@ const Login = () => {
                 <span className='my-8'>
                     Don&apos;t have an account? <Link href="/auth/signup" className="text-blue-500">Signup</Link>
                 </span>
+                {errorTitle && <Modals text={errorDescription} title={errorTitle} bodyColor={
+                    'text-red-200'
+                } headerColor={'text-red-700'} footerColor={'bg-transparent'} />}
             </div>
         </>
     )
