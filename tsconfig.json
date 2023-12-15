@@ -22,6 +22,16 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/redux_material/store.ts", "src/app/layout.tsx", "src/appwrite/headers.js", "src/widgets/Modal.jsx", "src/json/methods.js"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/context/store.ts",
+    "src/app/layout.tsx",
+    "src/appwrite/headers.js",
+    "src/widgets/Modal.jsx",
+    "src/json/methods.js"
+  ],
   "exclude": ["node_modules"]
 }

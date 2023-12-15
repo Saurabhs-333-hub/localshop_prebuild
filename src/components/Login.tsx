@@ -2,7 +2,7 @@
 import appwriteService from '@/appwrite/config'
 import { login } from '@/features/authSlice'
 import errorComponentsExtractor from '@/json/methods'
-import { AppDispatch } from '@/redux_material/store'
+import { AppDispatch } from '@/context/store'
 import Modals from '@/widgets/Modal'
 import { Button, Card, CardFooter, CardHeader, Divider, Input } from '@nextui-org/react'
 import Link from 'next/link'
@@ -56,6 +56,14 @@ const Login = () => {
             setLoading(false)
         }
     }
+    const validateEmail = (value: any) => value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
+
+    const isInvalid = React.useMemo(() => {
+        let value = formData.email;
+        if (value === "") return false;
+
+        return validateEmail(value) ? false : true;
+    }, [formData.email]);
     return (
         <>
             <div className="w-full flex flex-col justify-center items-center mt-24">
@@ -64,11 +72,14 @@ const Login = () => {
                     <Card isBlurred className=" border-none bg-background/60 dark:bg-default-100/30  flex flex-col  gap-2 bg-gray-800  rounded-lg px-16 py-10 mt-10">
                         {/* {error && <CardHeader className='text-red-700 text-ellipsis bg-danger-50 rounded-lg'>{error}</CardHeader>} */}
 
-                        <Input type="email" label="Email" value={formData.email} isRequired onClear={() => {
-                            setformData({ ...formData, email: '' })
-                        }} isClearable onChange={(e) => {
-                            setformData({ ...formData, email: e.target.value })
-                        }} className="rounded-lg m-auto text-cyan-500 w-full outline-none active:bg-transparent hover:text-cyan-300 transition-all" />
+                        <Input type="email" label="Email" value={formData.email}
+                            isInvalid={isInvalid}
+                            color={isInvalid ? "danger" : "default"}
+                            errorMessage={isInvalid && "Please enter a valid email"} isRequired onClear={() => {
+                                setformData({ ...formData, email: '' })
+                            }} isClearable onChange={(e) => {
+                                setformData({ ...formData, email: e.target.value })
+                            }} className="rounded-lg m-auto text-cyan-500 w-full outline-none active:bg-transparent hover:text-cyan-300 transition-all" />
                         <Input type="password" label="Password" value={formData.password} isRequired onClear={
                             () => {
                                 setformData({ ...formData, password: '' })
