@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, } from "@nextui-org/react";
 
-export default function Modals({ text,title,bodyColor, headerColor, footerColor, }) {
+export default function Modals({ text, title, bodyColor, headerColor, footerColor, }) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [modalPlacement, setModalPlacement] = React.useState("auto");
     useEffect(() => {
@@ -15,26 +15,26 @@ export default function Modals({ text,title,bodyColor, headerColor, footerColor,
                 isOpen={isOpen}
                 placement={modalPlacement}
                 onOpenChange={onOpenChange}
-                motionProps={{
-                    variants: {
-                        enter: {
-                            y: 0,
-                            opacity: 1,
-                            transition: {
-                                duration: 0.3,
-                                ease: "easeOut",
-                            },
-                        },
-                        exit: {
-                            y: -20,
-                            opacity: 0,
-                            transition: {
-                                duration: 0.2,
-                                ease: "easeIn",
-                            },
-                        },
-                    },
-                }}
+                // motionProps={{
+                //     variants: {
+                //         enter: {
+                //             y: 0,
+                //             opacity: 1,
+                //             transition: {
+                //                 duration: 0.3,
+                //                 ease: "easeOut",
+                //             },
+                //         },
+                //         exit: {
+                //             y: -20,
+                //             opacity: 0,
+                //             transition: {
+                //                 duration: 0.2,
+                //                 ease: "easeIn",
+                //             },
+                //         },
+                //     },
+                // }}
                 backdrop="blur"
                 classNames={{
                     body: `${bodyColor}`,
