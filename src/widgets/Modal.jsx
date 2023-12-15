@@ -15,26 +15,26 @@ export default function Modals({ text, title, bodyColor, headerColor, footerColo
                 isOpen={isOpen}
                 placement={modalPlacement}
                 onOpenChange={onOpenChange}
-                // motionProps={{
-                //     variants: {
-                //         enter: {
-                //             y: 0,
-                //             opacity: 1,
-                //             transition: {
-                //                 duration: 0.3,
-                //                 ease: "easeOut",
-                //             },
-                //         },
-                //         exit: {
-                //             y: -20,
-                //             opacity: 0,
-                //             transition: {
-                //                 duration: 0.2,
-                //                 ease: "easeIn",
-                //             },
-                //         },
-                //     },
-                // }}
+                motionProps={{
+                    variants: {
+                        enter: {
+                            // y: 0,
+                            opacity: 1,
+                            transition: {
+                                duration: 0.3,
+                                ease: "easeOut",
+                            },
+                        },
+                        exit: {
+                            // y: -20,
+                            opacity: 0,
+                            transition: {
+                                duration: 0.2,
+                                ease: "easeIn",
+                            },
+                        },
+                    },
+                }}
                 backdrop="blur"
                 classNames={{
                     body: `${bodyColor}`,
