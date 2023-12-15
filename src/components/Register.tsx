@@ -72,7 +72,7 @@ const Register = () => {
                 </span>
                 {errorTitle && <Modals text={errorDescription} title={errorTitle} bodyColor={
                     'text-red-200'
-                } headerColor={'text-red-700'} footerColor={'bg-transparent'} />}
+                } headerColor={'text-red-700'} footerColor={'bg-transparent'} action={false} />}
             </div>
         </>
     )

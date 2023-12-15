@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, } from "@nextui-org/react";
 
-export default function Modals({ text, title, bodyColor, headerColor, footerColor, }) {
+export default function Modals({ text, title, bodyColor, headerColor, footerColor, action}) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [modalPlacement, setModalPlacement] = React.useState("auto");
     useEffect(() => {
@@ -55,9 +55,9 @@ export default function Modals({ text, title, bodyColor, headerColor, footerColo
                                 <Button color="danger" variant="light" onPress={onClose}>
                                     Close
                                 </Button>
-                                <Button color="primary" onPress={onClose}>
+                               {action&& <Button color="primary" onPress={onClose}>
                                     Action
-                                </Button>
+                                </Button>}
                             </ModalFooter>
                         </>
                     )}
