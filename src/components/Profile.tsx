@@ -25,7 +25,7 @@ const Profile = () => {
     }, [])
     return (
         <>
-            <Dropdown placement="bottom-end">
+            <Dropdown placement="bottom">
                 <DropdownTrigger>
                     <Avatar isBordered
                         as="button"
