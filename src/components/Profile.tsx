@@ -25,7 +25,7 @@ const Profile = () => {
     }, [])
     return (
         <>
-            <Dropdown placement="bottom">
+            {/* <Dropdown placement="bottom">
                 <DropdownTrigger>
                     <Avatar isBordered
                         as="button"
@@ -39,7 +39,7 @@ const Profile = () => {
                     <DropdownItem showDivider>Settings</DropdownItem>
                     <DropdownItem description="This will logout you!" onClick={handleLogout} className='text-danger' color='danger'>Logout</DropdownItem>
                 </DropdownMenu>
-            </Dropdown>
+            </Dropdown> */}
         </>
     )
 }

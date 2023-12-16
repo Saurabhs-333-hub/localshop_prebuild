@@ -2,7 +2,7 @@
 import Login from '@/components/Login'
 import Register from '@/components/Register'
 import useAuth from '@/context/useAuth';
-import { redirect, useRouter } from 'next/navigation';
+import {  useRouter } from 'next/navigation';
 import React from 'react'
 
 const Page = () => {
@@ -11,7 +11,7 @@ const Page = () => {
 
   if (authStatus) {
     // router.replace("/profile");
-    redirect("/profile")
+    router.replace("/profile")
     return <></>;
   }
   return (

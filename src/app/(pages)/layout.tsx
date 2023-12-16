@@ -30,7 +30,7 @@ export default function PageLayout({
     return (
         <AuthProvider value={{ authStatus, setAuthStatus }}>
             <>
-                {/* <Header /> */}
+                <Header />
                 <div className="flex item-center justify-center w-full h-screen">
                     {children}
                 </div>

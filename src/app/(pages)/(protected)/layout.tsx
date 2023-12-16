@@ -4,8 +4,9 @@ import { Inter } from 'next/font/google'
 import Header from '@/components/Header'
 import appwriteService from '@/appwrite/config'
 import { useEffect, useState } from 'react'
-import { redirect, useRouter } from 'next/navigation'
+import {  useRouter } from 'next/navigation'
 import useAuth from '@/context/useAuth'
+import ProfileHeader from '@/components/ProfileHeader'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,8 +22,11 @@ export default function ProtectedPageLayout({
     const router = useRouter()
     if (!authStatus) {
         // router.replace("/auth/login");
-        redirect("/auth/login")
+        router.replace("/auth/login")
         return <></>;
     }
-    return children;
+    return <div className='flex flex-col'>
+        {/* <ProfileHeader/> */}
+        {children}
+    </div>;
 }
