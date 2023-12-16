@@ -13,7 +13,7 @@ export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
     const router = useRouter()
     const { setAuthStatus } = useAuth()
-    const params=useParams()
+    const params = useParams()
     const handleLogout = async () => {
         setLoader(true)
         router.replace('/auth/logout')
@@ -21,11 +21,11 @@ export default function Header() {
     }
     useEffect(() => {
         (async () => {
-            
-                const res = await appwriteService.getUserData()
-                setUser(res)
-                console.log(res.profilePic)
-            
+
+            const res = await appwriteService.getUserData()
+            setUser(res)
+            console.log(res.profilePic)
+
         })()
     }, [])
     const [isuser, setIsUser] = useState(false)
