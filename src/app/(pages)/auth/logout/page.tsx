@@ -14,13 +14,13 @@ const LogoutPage = () => {
                 setAuthStatus(false);
                 redirect("/auth/login");
             })
-    });
+    }, []);
 
     return (
         <>
-        <Card>
-            <h1>Logging out...</h1>
-        </Card>
+            <Card>
+                <h1>Logging out...</h1>
+            </Card>
         </>
     )
 }
