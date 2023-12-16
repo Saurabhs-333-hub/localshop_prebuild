@@ -1,7 +1,7 @@
 'use client'
 import Login from '@/components/Login'
 import useAuth from '@/context/useAuth';
-import {  useRouter } from 'next/navigation';
+import {  redirect, useRouter } from 'next/navigation';
 import React from 'react'
 
 const Page = () => {
@@ -10,7 +10,7 @@ const Page = () => {
 
     if (authStatus) {
         // router.replace("/profile");
-        router.replace("/profile")
+        redirect("/profile")
         return <></>;
     }
     return (

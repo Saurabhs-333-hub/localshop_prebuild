@@ -2,7 +2,7 @@
 import appwriteService from "@/appwrite/config";
 import useAuth from "@/context/useAuth";
 import { Card } from "@nextui-org/react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 
 const LogoutPage = () => {
@@ -13,7 +13,7 @@ const LogoutPage = () => {
         appwriteService.logoutUser()
             .then(() => {
                 setAuthStatus(false);
-                router.replace("/auth/login");
+                redirect("/auth/login");
             })
     }, []);
 
