@@ -33,10 +33,10 @@ const Profile = () => {
                         {user?.name}
                     </Avatar>
                 </DropdownTrigger>
-                <DropdownMenu>
-                    <DropdownItem>Profile</DropdownItem>
-                    <DropdownItem>Settings</DropdownItem>
-                    <DropdownItem onClick={handleLogout}>Logout</DropdownItem>
+                <DropdownMenu variant='flat'>
+                    <DropdownItem className='text-success' color='success'>Seller Account</DropdownItem>
+                    <DropdownItem showDivider>Settings</DropdownItem>
+                    <DropdownItem description="This will logout you!" onClick={handleLogout} className='text-danger' color='danger'>Logout</DropdownItem>
                 </DropdownMenu>
             </Dropdown>
         </>
