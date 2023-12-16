@@ -147,7 +147,16 @@ export class AppwriteService {
             throw new Error(`Error getting user: ${error}`);
         }
     }
-
+    async getUserData() {
+        try {
+            const res = await account.get();
+            const user = await database.getDocument("65576297141df7832e98", "6557640249fc55d337be", res.$id)
+            console.log(user)
+            return user
+        } catch (error) {
+            throw new Error(`Error getting user: ${error}`);
+        }
+    }
     //? This is the function that updates the user
     async updateUser(name: string) {
         try {
