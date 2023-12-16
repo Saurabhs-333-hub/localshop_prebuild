@@ -60,7 +60,7 @@ const Register = () => {
                 <h1 className='text-3xl font-bold'>Register</h1>
                 <form action="" className=' flex flex-col max-w-full gap-2' onSubmit={handleSubmit}>
                     <Card isBlurred className=" border-none bg-background/60 dark:bg-default-100/30  flex flex-col  gap-2 bg-gray-800  rounded-lg px-16 py-10 mt-10">
-                        <CardHeader className='text-cyan-500 flex gap-2 text-ellipsis bg-transparent rounded-lg'>
+                        <CardHeader className='text-cyan-500 flex flex-wrap gap-2 text-ellipsis bg-transparent rounded-lg'>
                             <Image
                                 as={NextImage}
                                 width={100}
