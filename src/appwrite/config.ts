@@ -1,5 +1,5 @@
 
-import { Client, Account, ID, Databases } from "appwrite";
+import { Client, Account, ID, Databases, Storage } from "appwrite";
 import { NextResponse } from "next/server";
 import { useDispatch } from "react-redux";
 import { login } from "@/features/authSlice";
@@ -9,6 +9,10 @@ type CreateUser = {
     email: string;
     password: string;
     name: string;
+    profileImage: {
+        id: any,
+        file: any
+    };
 };
 
 type LoginUser = {
@@ -24,19 +28,32 @@ client
 
 export const account = new Account(client);
 export const database = new Databases(client);
+export const storage = new Storage(client);
 
 
 export class AppwriteService {
-
+    async createFile(file: any, id: any) {
+        try {
+            const res = await storage.createFile("6577c442991fb8f4fd50", id, file, ["*"]);
+            return res;
+        } catch (error) {
+            throw new Error(`Error creating file: ${error}`);
+        }
+    }
     //? This is the function that creates the user
-    async createUser({ email, password, name }: CreateUser) {
+    async createUser({ email, password, name, profileImage }: CreateUser) {
         try {
             const userAccount = await account.create(ID.unique(), email, password, name)
             const { $id } = userAccount;
+            // this.createFile(profilePic, $id)
+            console.log('fen' + profileImage.file)
+            const res = await storage.createFile("6577c442991fb8f4fd50", profileImage.id, profileImage.file,);
+            const fileUrl = storage.getFilePreview("6577c442991fb8f4fd50", profileImage.id)
             const userSaved = await database.createDocument("65576297141df7832e98", "6557640249fc55d337be", $id, {
                 "name": name,
                 "email": email,
                 "password": password,
+                "profilePic": fileUrl,
                 "ip": "",
                 "osCode": "",
                 "osName": "",
@@ -116,7 +133,7 @@ export class AppwriteService {
     //? This is the function that logs the user out
     async logoutUser() {
         try {
-             account.deleteSession("current");
+            account.deleteSession("current");
         } catch (error) {
             throw new Error(`Error logging out user: ${error}`);
         }

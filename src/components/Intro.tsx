@@ -8,7 +8,7 @@ const Intro = () => {
             <h1 className="text-8xl">Localshop</h1>
             <button className="p-2 bg-slate-700 rounded-lg m-auto text-white hover:border-white hover:border-2  transition-all" onClick={
                 () => {
-                    router.push('/auth/login')
+                    router.push('/profile')
                 }
             }>Get Started</button>
 

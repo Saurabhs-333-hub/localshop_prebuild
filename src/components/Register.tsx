@@ -1,22 +1,29 @@
 'use client'
-import appwriteService from '@/appwrite/config'
+import appwriteService, { storage } from '@/appwrite/config'
 import Modals from '@/widgets/Modal'
 import { Button, Card, CardFooter, CardHeader, Divider, Image, Input } from '@nextui-org/react'
 import Link from 'next/link'
-import React from 'react'
+import React, { useRef } from 'react'
 import errorComponentsExtractor from "@/json/methods.js";
 import NextImage from 'next/image'
 import { useRouter } from 'next/navigation'
+import avatar from '@/assets/user_avatar.png'
+import { Client, Account, ID, Databases, Storage } from "appwrite";
+import { v4 } from "uuid";
 const Register = () => {
-    const [formData, setformData] = React.useState({
+    const [formData, setformData]: any = React.useState({
         email: '',
         password: '',
-        name: ''
+        name: '',
+        profileImage: {
+            id: '',
+            file: ''
+        }
     })
     const [errorTitle, setErrorTitle] = React.useState('')
     const [errorDescription, setErrorDescription] = React.useState('')
     const [loading, setLoading] = React.useState(false)
-    const [image, setImage] = React.useState('')
+    const [image, setImage]: any = React.useState("")
     const router = useRouter()
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -46,21 +53,34 @@ const Register = () => {
 
         return validateEmail(value) ? false : true;
     }, [formData.email]);
+    const refs = useRef<HTMLInputElement>(null)
     return (
         <>
             <div className="flex flex-col justify-center items-center  mt-24">
                 <h1 className='text-3xl font-bold'>Register</h1>
                 <form action="" className=' flex flex-col max-w-full gap-2' onSubmit={handleSubmit}>
                     <Card isBlurred className=" border-none bg-background/60 dark:bg-default-100/30  flex flex-col  gap-2 bg-gray-800  rounded-lg px-16 py-10 mt-10">
-                        <CardHeader className='text-cyan-500 text-ellipsis bg-transparent rounded-lg'>
+                        <CardHeader className='text-cyan-500 flex gap-2 text-ellipsis bg-transparent rounded-lg'>
                             <Image
                                 as={NextImage}
-                                width={300}
-                                height={200}
-                                src={image}
+                                width={100}
+                                height={50}
+                                src={image || avatar.src}
+                                priority={true}
                                 alt="NextUI hero Image"
                             />
-                            <Button color='primary' variant='flat' className='text-white hover:text-cyan-300 transition-all' >Choose Profile Image</Button>
+                            <input type="file" ref={refs} onChange={async (e) => {
+                                // console.log(formData)
+                                let file = e.target.files![0]
+                                await setImage(URL.createObjectURL(file))
+                                let id = v4()
+                                console.log(id)
+                                setformData({ ...formData, profileImage: { id: id, file: file } })
+                                console.log(formData)
+                            }} className="rounded-lg m-auto hidden text-cyan-500 w-full outline-none active:bg-transparent hover:text-cyan-300 transition-all" />
+                            <Button onClick={() => {
+                                refs.current!.click()
+                            }} color='primary' variant='flat' className='text-white hover:text-cyan-300 transition-all' >Choose Profile Image</Button>
                         </CardHeader>
                         {/* {error && <CardHeader className='text-red-700 text-ellipsis bg-danger-50 rounded-lg'>{error}</CardHeader>} */}
                         <Input type="text" label="Name" value={formData.name}
