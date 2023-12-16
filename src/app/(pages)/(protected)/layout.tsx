@@ -4,7 +4,7 @@ import { Inter } from 'next/font/google'
 import Header from '@/components/Header'
 import appwriteService from '@/appwrite/config'
 import { useEffect, useState } from 'react'
-import {  useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import useAuth from '@/context/useAuth'
 import ProfileHeader from '@/components/ProfileHeader'
 
@@ -26,7 +26,6 @@ export default function ProtectedPageLayout({
         return <></>;
     }
     return <div className='flex flex-col'>
-        {/* <ProfileHeader/> */}
         {children}
     </div>;
 }

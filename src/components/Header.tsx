@@ -60,7 +60,7 @@ export default function Header() {
                 {/* <AcmeLogo /> */}
                 <p className="font-bold text-inherit">ACME</p>
             </NavbarBrand>
-            
+
             <NavbarContent className="hidden sm:flex gap-4" justify="center">
                 <Dropdown>
                     <NavbarItem>
