@@ -29,6 +29,7 @@ const Profile = () => {
                 <DropdownTrigger>
                     <Avatar isBordered
                         as="button"
+                        size='lg'
                         className="transition-transform" src={user?.profilePic}>
                         {user?.name}
                     </Avatar>
