@@ -6,7 +6,6 @@ import { redirect, useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 
 const LogoutPage = () => {
-    const router = useRouter();
     const { setAuthStatus } = useAuth();
 
     useEffect(() => {
@@ -15,7 +14,7 @@ const LogoutPage = () => {
                 setAuthStatus(false);
                 redirect("/auth/login");
             })
-    }, []);
+    });
 
     return (
         <>
