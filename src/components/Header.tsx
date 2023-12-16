@@ -12,7 +12,7 @@ export default function Header() {
     const [loader, setLoader] = React.useState(false)
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
     const router = useRouter()
-    const { setAuthStatus } = useAuth()
+    const { authStatus } = useAuth()
     const params = useParams()
     const handleLogout = async () => {
         setLoader(true)
@@ -147,7 +147,7 @@ export default function Header() {
                     </NavbarMenuItem>
                 ))}
             </NavbarMenu>
-            {isuser == false || user == null ? <NavbarContent justify="end"> <NavbarItem>
+            {authStatus == false || isuser==null || user == null ? <NavbarContent justify="end"> <NavbarItem>
                 <Button as={Link} color="primary" href="#" variant="flat">
                     Login
                 </Button>

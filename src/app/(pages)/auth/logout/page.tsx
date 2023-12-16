@@ -7,12 +7,12 @@ import React, { useEffect } from "react";
 
 const LogoutPage = () => {
     const { setAuthStatus } = useAuth();
-
+    const router = useRouter()
     useEffect(() => {
         appwriteService.logoutUser()
             .then(() => {
                 setAuthStatus(false);
-                redirect("/auth/login");
+                router.replace("/auth/login");
             })
     }, []);
 
