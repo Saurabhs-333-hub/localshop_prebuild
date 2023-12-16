@@ -132,23 +132,25 @@ export default function Header() {
                 </NavbarItem>
             </NavbarContent>
             <NavbarMenu>
-                {menuItems.map((item, index) => (
-                    <NavbarMenuItem key={`${item}-${index}`}>
-                        <Link
-                            className="w-full"
-                            color={
-                                index === 2 ? "warning" : index === menuItems.length - 1 ? "danger" : "foreground"
-                            }
-                            href="#"
-                            size="lg"
-                        >
-                            {item}
-                        </Link>
-                    </NavbarMenuItem>
-                ))}
+
+
+                <NavbarMenuItem isActive>
+                    <Button  fullWidth>
+                        Customers
+                    </Button>
+                </NavbarMenuItem>
+                <NavbarMenuItem>
+                    <Button color="default" fullWidth >
+                        Integrations
+                    </Button>
+                </NavbarMenuItem>
+
+
             </NavbarMenu>
-            {authStatus == false || isuser==null || user == null ? <NavbarContent justify="end"> <NavbarItem>
-                <Button as={Link} color="primary" href="#" variant="flat">
+            {authStatus == false || isuser == null || user == null ? <NavbarContent justify="end"> <NavbarItem>
+                <Button color="primary" onClick={() => {
+                    router.push('/auth/login')
+                }} variant="flat">
                     Login
                 </Button>
             </NavbarItem>
@@ -169,7 +171,11 @@ export default function Header() {
                         <DropdownMenu aria-label="Profile Actions" variant="flat">
                             <DropdownItem key="profile" className="h-14 gap-2">
                                 <p className="font-semibold">Signed in as</p>
-                                <p className="font-semibold">{user!.name}</p>
+                                <div className="flex">
+                                    <p className="font-semibold text-purple-500">{user!.name}</p>
+                                    <p className="font-semibold text-purple-500 m-auto uppercase">{user!.countryName}</p>
+
+                                </div>
                             </DropdownItem>
                             <DropdownItem key="selleraccount" className='text-success' color='success'>Seller Account</DropdownItem>
                             <DropdownItem key="settings" showDivider>Settings</DropdownItem>
