@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from "react";
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar, NavbarMenuToggle } from "@nextui-org/react";
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar, NavbarMenuToggle, NavbarMenu, NavbarMenuItem } from "@nextui-org/react";
 import appwriteService from "@/appwrite/config";
 import { useParams, useRouter } from "next/navigation";
 import { Models } from "appwrite";
@@ -28,6 +28,19 @@ export default function Header() {
 
         })()
     }, [])
+    const menuItems = [
+        "Profile",
+        "Dashboard",
+        "Activity",
+        "Analytics",
+        "System",
+        "Deployments",
+        "My Settings",
+        "Team Settings",
+        "Help & Feedback",
+        "Log Out",
+    ];
+
     const [isuser, setIsUser] = useState(false)
     useEffect(() => {
         (async () => {
@@ -38,7 +51,7 @@ export default function Header() {
     )
 
     return (
-        <Navbar onMenuOpenChange={setIsMenuOpen}>
+        <Navbar onMenuOpenChange={setIsMenuOpen} isMenuOpen={isMenuOpen}>
             <NavbarMenuToggle
                 aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                 className="sm:hidden"
@@ -47,6 +60,7 @@ export default function Header() {
                 {/* <AcmeLogo /> */}
                 <p className="font-bold text-inherit">ACME</p>
             </NavbarBrand>
+            
             <NavbarContent className="hidden sm:flex gap-4" justify="center">
                 <Dropdown>
                     <NavbarItem>
@@ -117,6 +131,22 @@ export default function Header() {
                     </Link>
                 </NavbarItem>
             </NavbarContent>
+            <NavbarMenu>
+                {menuItems.map((item, index) => (
+                    <NavbarMenuItem key={`${item}-${index}`}>
+                        <Link
+                            className="w-full"
+                            color={
+                                index === 2 ? "warning" : index === menuItems.length - 1 ? "danger" : "foreground"
+                            }
+                            href="#"
+                            size="lg"
+                        >
+                            {item}
+                        </Link>
+                    </NavbarMenuItem>
+                ))}
+            </NavbarMenu>
             {isuser == false || user == null ? <NavbarContent justify="end"> <NavbarItem>
                 <Button as={Link} color="primary" href="#" variant="flat">
                     Login
