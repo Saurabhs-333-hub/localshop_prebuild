@@ -5,6 +5,7 @@ import appwriteService from "@/appwrite/config";
 import { useParams, useRouter } from "next/navigation";
 import { Models } from "appwrite";
 import useAuth from "@/context/useAuth";
+import Modals from "@/widgets/Modal";
 
 
 export default function Header() {
@@ -21,11 +22,16 @@ export default function Header() {
     }
     useEffect(() => {
         (async () => {
+            try {
 
-            const res = await appwriteService.getUserData()
-            setUser(res)
-            console.log(res.profilePic)
 
+                const res = await appwriteService.getUserData()
+                setUser(res)
+                console.log(res.profilePic)
+            } catch (error) {
+
+                return <Modals headerColor={'text-red-600'} footerColor={'bg-transparent'} bodyColor={"text-red-200"} action={false} title={"Oo...Oh!"} text={error} />
+            }
         })()
     }, [])
     const menuItems = [
@@ -42,6 +48,7 @@ export default function Header() {
     ];
 
     const [isuser, setIsUser] = useState(false)
+    const [active, setActive] = useState(false)
     useEffect(() => {
         (async () => {
             const res = await appwriteService.isLoggedIn();
@@ -58,7 +65,7 @@ export default function Header() {
             />
             <NavbarBrand>
                 {/* <AcmeLogo /> */}
-                <p className="font-bold text-inherit">ACME</p>
+                <p className="font-bold text-inherit">LOCALSHOP</p>
             </NavbarBrand>
 
             <NavbarContent className="hidden sm:flex gap-4" justify="center">
@@ -72,7 +79,7 @@ export default function Header() {
                                 radius="sm"
                                 variant="light"
                             >
-                                Features
+                                Men
                             </Button>
                         </DropdownTrigger>
                     </NavbarItem>
@@ -121,27 +128,35 @@ export default function Header() {
                     </DropdownMenu>
                 </Dropdown>
                 <NavbarItem isActive>
-                    <Link href="#" aria-current="page">
-                        Customers
-                    </Link>
+                    <Button disableRipple
+                        className="p-0 bg-transparent data-[hover=true]:bg-transparent"
+                        // endContent={icons.chevron}
+                        radius="sm"
+                        variant="light">
+                        Women
+                    </Button>
                 </NavbarItem>
                 <NavbarItem>
-                    <Link color="foreground" href="#">
-                        Integrations
-                    </Link>
+                    <Button disableRipple
+                        className="p-0 bg-transparent data-[hover=true]:bg-transparent"
+                        // endContent={icons.chevron}
+                        radius="sm"
+                        variant="light">
+                        Sale
+                    </Button>
                 </NavbarItem>
             </NavbarContent>
             <NavbarMenu>
 
 
                 <NavbarMenuItem isActive>
-                    <Button  fullWidth>
-                        Customers
+                    <Button fullWidth>
+                        Women
                     </Button>
                 </NavbarMenuItem>
                 <NavbarMenuItem>
                     <Button color="default" fullWidth >
-                        Integrations
+                        Sale
                     </Button>
                 </NavbarMenuItem>
 

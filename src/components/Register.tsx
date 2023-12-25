@@ -105,7 +105,7 @@ const Register = () => {
                             setformData({ ...formData, password: e.target.value })
                         }} className="rounded-lg m-auto text-cyan-500 w-full outline-none active:bg-transparent hover:text-cyan-300 transition-all" />
                         <CardFooter>
-                            <Button type="submit" color='primary' variant='flat' value="Login" className="p-2 px-10 w-auto cursor-pointer rounded-full m-auto text-white hover:text-cyan-300 transition-all" >{loading ? "Registering..." : "Register"}</Button>
+                            <Button type="submit" color='primary' variant='flat' isDisabled={loading ? true : false} value="Login" className="p-2 px-10 w-auto cursor-pointer rounded-full m-auto text-white hover:text-cyan-300 transition-all" >{loading ? "Registering..." : "Register"}</Button>
                         </CardFooter>
                     </Card>
                 </form>
