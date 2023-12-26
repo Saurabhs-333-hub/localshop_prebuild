@@ -9,13 +9,17 @@ import Modals from "@/widgets/Modal";
 import shopCategories from "@/json/shopCategories.json";
 import bankstates from "@/json/states.json";
 import axios from "axios";
+import { errorComponentsExtractor } from "@/json/methods";
 
 
 
 export default function Header() {
     const [user, setUser] = useState<Models.Document>()
     const [loader, setLoader] = React.useState(false)
+    const [errorTitle, setErrorTitle] = React.useState('')
+    const [errorDescription, setErrorDescription] = React.useState('')
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+    const [invalidDetails, setInvalidDetails] = React.useState(true)
     const [formData, setformData] = React.useState({
         shopName: "",
         shopCategory: "",
@@ -33,7 +37,7 @@ export default function Header() {
         bankAddress: "",
         bankCity: "",
         bankState: "",
-        bankPincode: "",
+        bankCode: "",
         bankPhone: "",
         bankEmail: "",
         bankWebsite: "",
@@ -43,7 +47,6 @@ export default function Header() {
         shopInstagram: "",
         shopYoutube: "",
         shopWhatsapp: ""
-
     })
     const handleInputChange = (fieldName: string, value: string) => {
         setformData((prevData) => ({
@@ -58,6 +61,32 @@ export default function Header() {
             [fieldName]: value,
         }));
     };
+
+    const registerShop = async () => {
+        try {
+            if (formData.aadharNumber.length === 16 && formData.panNumber.length === 10 && formData.gstinNumber.length === 15 &&
+                formData.bankAccountNumber.length > 8 && formData.ifscCode.length > 6 && formData.shopName !== '' &&
+                formData.shopCategory !== '' && formData.shopAddress !== '' && formData.shopDescription !== '' && formData.shopPhone.length > 8
+            ) {
+                // setInvalidDetails(false)
+                setLoader(true)
+                const res = await appwriteService.registerShop(formData)
+                setLoader(false)
+                console.log(res)
+            } else {
+                setErrorTitle('Invalid Details')
+                setErrorDescription('Please check your details again')
+                // setInvalidDetails(true)
+            }
+        } catch (error: any) {
+            console.log(error)
+            const { title, description } = errorComponentsExtractor(error.message)
+            setErrorTitle(title)
+            setErrorDescription(description)
+        } finally {
+            setLoader(false)
+        }
+    }
     const router = useRouter()
     const { authStatus } = useAuth()
     const params = useParams()
@@ -69,8 +98,6 @@ export default function Header() {
     useEffect(() => {
         (async () => {
             try {
-
-
                 const res = await appwriteService.getUserData()
                 setUser(res)
                 console.log(res.profilePic)
@@ -94,13 +121,21 @@ export default function Header() {
     ];
 
     const [isuser, setIsUser] = useState(false)
+    const [isUserHasShop, setIsUserHasShop] = useState(false)
+
     const [active, setActive] = useState(false)
     useEffect(() => {
         (async () => {
-            const res = await appwriteService.isLoggedIn();
-            setIsUser(res);
+            try {
+                const res = await appwriteService.isLoggedIn();
+                setIsUser(res);
+                const response = await appwriteService.getShop();
+                setIsUserHasShop(response);
+            } catch (error) {
+                setIsUserHasShop(false);
+            }
         })()
-    },
+    }, []
     )
     const { onOpen, onClose, isOpen, onOpenChange } = useDisclosure()
     return (
@@ -238,7 +273,7 @@ export default function Header() {
 
                                 </div>
                             </DropdownItem>
-                            <DropdownItem key="selleraccount" className='text-success' color='success' onClick={onOpen}>Seller Account</DropdownItem>
+                            {isUserHasShop ? <DropdownItem key="dashboard" className='text-success' color='success' >Dash Board</DropdownItem> : <DropdownItem key="selleraccount" className='text-success' color='success' onClick={onOpen}>Seller Account</DropdownItem>}
                             <DropdownItem key="settings" showDivider>Settings</DropdownItem>
                             <DropdownItem key="system">System</DropdownItem>
                             <DropdownItem key="configurations">Configurations</DropdownItem>
@@ -248,6 +283,7 @@ export default function Header() {
                     </Dropdown>
                 </NavbarContent>}
             <Modal
+                backdrop="blur"
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
                 isDismissable={false}
@@ -308,10 +344,10 @@ export default function Header() {
                                                 label="Shop Name"
                                                 variant="flat" />
                                             <Select className="max-w-md" value={formData.shopCategory}
-                                                onChange={(e) => handleSelectChange("shopCategory", e.target.value)} isRequired label="Choose shop category">
+                                                isRequired label="Choose shop category" placeholder={formData.shopCategory}>
                                                 {
                                                     shopCategories.map((category) => {
-                                                        return <SelectItem value={category.name} key={category.id}>{category.name}</SelectItem>
+                                                        return <SelectItem onClick={(e) => handleSelectChange("shopCategory", category.name)} value={category.name} key={category.id}>{category.name}</SelectItem>
                                                     })
                                                 }
                                             </Select>
@@ -381,10 +417,8 @@ export default function Header() {
                                                         handleInputChange("bankAddress", res.data.ADDRESS);
                                                         handleInputChange("bankCity", res.data.CITY);
                                                         handleInputChange("bankState", res.data.STATE);
-                                                        handleInputChange("bankPincode", res.data.BANKCODE);
+                                                        handleInputChange("bankCode", res.data.BANKCODE);
                                                         handleInputChange("bankPhone", res.data.CONTACT);
-                                                        handleInputChange("bankEmail", res.data.EMAIL);
-                                                        handleInputChange("bankWebsite", res.data.WEBSITE);
                                                     }).catch((err) => {
                                                         console.log(err)
                                                     }
@@ -395,14 +429,15 @@ export default function Header() {
                                             <Input className="max-w-md" onChange={(e) => handleInputChange("bankAddress", e.target.value)} value={formData.bankAddress} label="Bank Address" isDisabled variant="flat" />
                                             <Input className="max-w-md" onChange={(e) => handleInputChange("bankCity", e.target.value)} value={formData.bankCity} label="Bank City" isDisabled variant="flat" />
                                             <Select className="max-w-md" value={formData.bankState}
-                                                onChange={(e) => handleSelectChange("bankState", e.target.value)} disabled label="Choose bank state">
+                                                placeholder={formData.bankState}
+                                                disabled label="Choose bank state">
                                                 {
                                                     bankstates.states.map((category) => {
-                                                        return <SelectItem value={category.name} key={category.id}>{category.name}</SelectItem>
+                                                        return <SelectItem value={category.name} onClick={(e) => handleSelectChange("bankState", category.name)} key={category.id}>{category.name}</SelectItem>
                                                     })
                                                 }
                                             </Select>
-                                            <Input className="max-w-md" onChange={(e) => handleInputChange("bankPincode", e.target.value)} value={formData.bankPincode} isDisabled label="Bank Code" variant="flat" />
+                                            <Input className="max-w-md" onChange={(e) => handleInputChange("bankCode", e.target.value)} value={formData.bankCode} isDisabled label="Bank Code" variant="flat" />
                                             <Input className="max-w-md" onChange={(e) => handleInputChange("bankPhone", e.target.value)} value={formData.bankPhone} label="Bank Phone" variant="flat" />
                                             <Input className="max-w-md" onChange={(e) => handleInputChange("bankEmail", e.target.value)} value={formData.bankEmail} label="Bank Email" variant="flat" />
                                             <Input className="max-w-md" onChange={(e) => handleInputChange("bankWebsite", e.target.value)} value={formData.bankWebsite} label="Bank Website" variant="flat" />
@@ -426,19 +461,29 @@ export default function Header() {
 
 
                             </ModalBody>
-                            <ModalFooter>
-                                <Button color="danger" variant="light" onPress={onClose}>
+                            <ModalFooter
+                            >
+                                {loader === true ? <Button color="warning" variant="flat" >Registering...</Button> : <><Button color="danger" variant="light" onPress={onClose}>
                                     Close
                                 </Button>
-                                <Button color="primary" onPress={onClose}>
-                                    Action
-                                </Button>
+                                    <Button color="success" variant="ghost"
+                                        onClick={() => {
+                                            setErrorTitle('')
+                                            setErrorDescription('')
+                                            registerShop()
+                                        }}
+                                    >
+                                        Register
+                                    </Button>
+                                </>}
+
                             </ModalFooter>
                         </form>
                         </>
                     )}
                 </ModalContent>
             </Modal>
+            {errorTitle && <Modals headerColor={'text-red-600'} footerColor={'bg-transparent'} bodyColor={"text-red-200"} action={false} title={errorTitle} text={errorDescription} />}
         </Navbar>
     );
 }

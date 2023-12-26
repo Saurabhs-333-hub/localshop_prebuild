@@ -3,6 +3,7 @@ import { Client, Account, ID, Databases, Storage } from "appwrite";
 import { NextResponse } from "next/server";
 import { useDispatch } from "react-redux";
 import { login } from "@/features/authSlice";
+import { v4 } from "uuid";
 const cors = require('cors')
 cors()
 type CreateUser = {
@@ -182,7 +183,7 @@ export class AppwriteService {
         bankAddress,
         bankCity,
         bankState,
-        bankPincode,
+        bankCode,
         bankPhone,
         bankEmail,
         bankWebsite,
@@ -194,7 +195,8 @@ export class AppwriteService {
         shopWhatsapp, }: any) {
         try {
             const user = await account.get();
-            const res = await database.createDocument("65576297141df7832e98", "6557640249fc55d337be", user.$id, {
+            const res = await database.createDocument("65576297141df7832e98", "658b4a0b26068c4e28e7", user.$id, {
+                "shopId": v4(),
                 "shopName": shopName,
                 "shopCategory": shopCategory,
                 "shopAddress": shopAddress,
@@ -211,7 +213,7 @@ export class AppwriteService {
                 "bankAddress": bankAddress,
                 "bankCity": bankCity,
                 "bankState": bankState,
-                "bankPincode": bankPincode,
+                "bankCode": bankCode,
                 "bankPhone": bankPhone,
                 "bankEmail": bankEmail,
                 "bankWebsite": bankWebsite,
@@ -225,6 +227,20 @@ export class AppwriteService {
             return res
         } catch (error) {
             throw new Error(`Error registering shop: ${error}`);
+        }
+    }
+
+    async getShop() {
+        try {
+            const user = await account.get();
+            const res = await database.getDocument("65576297141df7832e98", "658b4a0b26068c4e28e7", user.$id)
+            if (res) {
+                return true
+            } else {
+                return false
+            }
+        } catch (error) {
+            throw new Error(`Error getting shop: ${error}`);
         }
     }
 }
