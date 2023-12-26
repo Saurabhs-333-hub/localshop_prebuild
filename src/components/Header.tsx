@@ -211,7 +211,7 @@ export default function Header() {
                 isDismissable={false}
                 size="5xl"
                 scrollBehavior="outside"
-                placement="center"
+                placement="auto"
             >
                 <ModalContent>
                     {(onClose) => (
@@ -242,7 +242,6 @@ export default function Header() {
                                                 <Input className="max-w-md" label="Shop Description" isRequired variant="flat" />
                                                 <Input className="max-w-md" type="number" isRequired label="Shop Phone" variant="flat" />
                                                 <Input className="max-w-md" label="Shop Email" variant="flat" />
-                                                {/* <Divider /> */}
                                                 <Accordion variant="bordered" defaultExpandedKeys={"important details"}>
                                                     <AccordionItem key={"important details"} title={"Important Details"}>
                                                         <Input className="max-w-full" label="GSTIN Number" description="USE 22AAAAA0000A1Z5 FORMAT" isRequired variant="flat" />
