@@ -1,11 +1,12 @@
 'use client'
 import React, { useEffect, useState } from "react";
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar, NavbarMenuToggle, NavbarMenu, NavbarMenuItem } from "@nextui-org/react";
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, useDisclosure, ModalContent, Modal, ModalHeader, ModalBody, ModalFooter, Input, Select, SelectItem, Divider } from "@nextui-org/react";
 import appwriteService from "@/appwrite/config";
 import { useParams, useRouter } from "next/navigation";
 import { Models } from "appwrite";
 import useAuth from "@/context/useAuth";
 import Modals from "@/widgets/Modal";
+import shopCategories from "@/json/shopCategories.json";
 
 
 export default function Header() {
@@ -56,7 +57,7 @@ export default function Header() {
         })()
     },
     )
-
+    const { onOpen, onClose, isOpen, onOpenChange } = useDisclosure()
     return (
         <Navbar onMenuOpenChange={setIsMenuOpen} isMenuOpen={isMenuOpen}>
             <NavbarMenuToggle
@@ -192,7 +193,7 @@ export default function Header() {
 
                                 </div>
                             </DropdownItem>
-                            <DropdownItem key="selleraccount" className='text-success' color='success'>Seller Account</DropdownItem>
+                            <DropdownItem key="selleraccount" className='text-success' color='success' onClick={onOpen}>Seller Account</DropdownItem>
                             <DropdownItem key="settings" showDivider>Settings</DropdownItem>
                             <DropdownItem key="system">System</DropdownItem>
                             <DropdownItem key="configurations">Configurations</DropdownItem>
@@ -201,7 +202,65 @@ export default function Header() {
                         </DropdownMenu>
                     </Dropdown>
                 </NavbarContent>}
+            <Modal
+                isOpen={isOpen}
+                onOpenChange={onOpenChange}
+                isDismissable={false}
+                size="5xl"
+                scrollBehavior="outside"
+            >
+                <ModalContent>
+                    {(onClose) => (
+                        <>
+                            <ModalHeader className="flex flex-col gap-1">Register Your Shop</ModalHeader>
+                            <ModalBody >
+                                <form className="flex flex-col gap-1">
+                                    <section className="flex flex-wrap gap-1">
+                                        <Input autoFocus
+                                            isRequired
+                                            className="max-w-xs"
+                                            label="Shop Name"
+                                            variant="flat" />
+                                        <Select className="max-w-xs" isRequired label="Choose shop category">
+                                            {
+                                                shopCategories.map((category) => {
+                                                    return <SelectItem value={category.name} key={category.id}>{category.name}</SelectItem>
+                                                })
+                                            }
+                                        </Select>
 
+                                        <Input className="max-w-xs" label="Shop Address" isRequired variant="flat" />
+                                        <Input className="max-w-xs" label="Shop Description" isRequired variant="flat" />
+                                        <Input className="max-w-xs" type="number" isRequired label="Shop Phone" variant="flat" />
+                                        <Input className="max-w-xs" label="Shop Email" variant="flat" />
+                                        <Input className="max-w-xs" label="GSTIN Number" isRequired variant="flat" />
+                                    </section>
+                                    <Divider />
+                                    <ModalHeader>
+                                        Social Media (not required)
+                                    </ModalHeader>
+                                    <section className="flex flex-wrap gap-1">
+                                        <Input className="max-w-xs" type="url" label="Shop Website" variant="flat" />
+                                        <Input className="max-w-xs" type="url" label="Shop Facebook" variant="flat" />
+                                        <Input className="max-w-xs" type="url" label="Shop Twitter" variant="flat" />
+                                        <Input className="max-w-xs" type="url" label="Shop Instagram" variant="flat" />
+                                        <Input className="max-w-xs" type="url" label="Shop Youtube" variant="flat" />
+                                        <Input className="max-w-xs" type="url" label="Shop Whatsapp" variant="flat" />
+                                    </section>
+                                </form>
+                            </ModalBody>
+                            <ModalFooter>
+                                <Button color="danger" variant="light" onPress={onClose}>
+                                    Close
+                                </Button>
+                                <Button color="primary" onPress={onClose}>
+                                    Action
+                                </Button>
+                            </ModalFooter>
+                        </>
+                    )}
+                </ModalContent>
+            </Modal>
         </Navbar>
     );
 }

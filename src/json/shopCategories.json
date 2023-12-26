@@ -1,0 +1,146 @@
+[
+    {
+        "id": 1,
+        "name": "Electronics"
+    },
+    {
+        "id": 2,
+        "name": "Fashion"
+    },
+    {
+        "id": 3,
+        "name": "Home"
+    },
+    {
+        "id": 4,
+        "name": "Beauty"
+    },
+    {
+        "id": 5,
+        "name": "Toys"
+    },
+    {
+        "id": 6,
+        "name": "Sports"
+    },
+    {
+        "id": 7,
+        "name": "Books"
+    },
+    {
+        "id": 8,
+        "name": "Grocery"
+    },
+    {
+        "id": 9,
+        "name": "Health"
+    },
+    {
+        "id": 10,
+        "name": "Automotive"
+    },
+    {
+        "id": 11,
+        "name": "Industrial"
+    },
+    {
+        "id": 12,
+        "name": "Movies"
+    },
+    {
+        "id": 13,
+        "name": "Music"
+    },
+    {
+        "id": 14,
+        "name": "Games"
+    },
+    {
+        "id": 15,
+        "name": "Tools"
+    },
+    {
+        "id": 16,
+        "name": "Baby"
+    },
+    {
+        "id": 17,
+        "name": "Software"
+    },
+    {
+        "id": 18,
+        "name": "Jewelery"
+    },
+    {
+        "id": 19,
+        "name": "Kids"
+    },
+    {
+        "id": 20,
+        "name": "Garden"
+    },
+    {
+        "id": 21,
+        "name": "Shoes"
+    },
+    {
+        "id": 22,
+        "name": "Outdoors"
+    },
+    {
+        "id": 23,
+        "name": "Computers"
+    },
+    {
+        "id": 24,
+        "name": "Tools"
+    },
+    {
+        "id": 25,
+        "name": "Industrial"
+    },
+    {
+        "id": 26,
+        "name": "Beauty"
+    },
+    {
+        "id": 27,
+        "name": "Games"
+    },
+    {
+        "id": 28,
+        "name": "Baby"
+    },
+    {
+        "id": 29,
+        "name": "Health"
+    },
+    {
+        "id": 30,
+        "name": "Automotive"
+    },
+    {
+        "id": 31,
+        "name": "Sports"
+    },
+    {
+        "id": 32,
+        "name": "Books"
+    },
+    {
+        "id": 33,
+        "name": "Home"
+    },
+    {
+        "id": 34,
+        "name": "Movies"
+    },
+    {
+        "id": 35,
+        "name": "Kids"
+    },
+    {
+        "id": 36,
+        "name": "Music"
+    }
+]
