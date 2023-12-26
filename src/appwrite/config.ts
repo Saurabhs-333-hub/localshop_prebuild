@@ -165,6 +165,68 @@ export class AppwriteService {
             throw new Error(`Error updating user: ${error}`);
         }
     }
+
+    async registerShop({ shopName,
+        shopCategory,
+        shopAddress,
+        shopDescription,
+        shopPhone,
+        shopEmail,
+        gstinNumber,
+        panNumber,
+        aadharNumber,
+        bankAccountNumber,
+        ifscCode,
+        bankName,
+        bankBranch,
+        bankAddress,
+        bankCity,
+        bankState,
+        bankPincode,
+        bankPhone,
+        bankEmail,
+        bankWebsite,
+        shopWebsite,
+        shopFacebook,
+        shopTwitter,
+        shopInstagram,
+        shopYoutube,
+        shopWhatsapp, }: any) {
+        try {
+            const user = await account.get();
+            const res = await database.createDocument("65576297141df7832e98", "6557640249fc55d337be", user.$id, {
+                "shopName": shopName,
+                "shopCategory": shopCategory,
+                "shopAddress": shopAddress,
+                "shopDescription": shopDescription,
+                "shopPhone": shopPhone,
+                "shopEmail": shopEmail,
+                "gstinNumber": gstinNumber,
+                "panNumber": panNumber,
+                "aadharNumber": aadharNumber,
+                "bankAccountNumber": bankAccountNumber,
+                "ifscCode": ifscCode,
+                "bankName": bankName,
+                "bankBranch": bankBranch,
+                "bankAddress": bankAddress,
+                "bankCity": bankCity,
+                "bankState": bankState,
+                "bankPincode": bankPincode,
+                "bankPhone": bankPhone,
+                "bankEmail": bankEmail,
+                "bankWebsite": bankWebsite,
+                "shopWebsite": shopWebsite,
+                "shopFacebook": shopFacebook,
+                "shopTwitter": shopTwitter,
+                "shopInstagram": shopInstagram,
+                "shopYoutube": shopYoutube,
+                "shopWhatsapp": shopWhatsapp,
+            })
+            return res
+        } catch (error) {
+            throw new Error(`Error registering shop: ${error}`);
+        }
+    }
 }
 
 export const appwriteService = new AppwriteService();
