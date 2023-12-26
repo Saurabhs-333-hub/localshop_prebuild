@@ -219,7 +219,42 @@ export default function Header() {
                             <ModalHeader className="flex flex-col gap-1">Register Your Shop</ModalHeader>
                             <ModalBody >
                                 <form>
-                                    <Accordion variant="bordered" defaultExpandedKeys={["shop details"]}>
+                                    <Accordion variant="bordered" defaultExpandedKeys={["shop details"]} motionProps={{
+                                        variants: {
+                                            enter: {
+                                                y: 0,
+                                                opacity: 1,
+                                                height: "auto",
+                                                transition: {
+                                                    height: {
+                                                        type: "spring",
+                                                        stiffness: 500,
+                                                        damping: 30,
+                                                        duration: 1,
+                                                    },
+                                                    opacity: {
+                                                        easings: "ease",
+                                                        duration: 1,
+                                                    },
+                                                },
+                                            },
+                                            exit: {
+                                                y: -10,
+                                                opacity: 0,
+                                                height: 0,
+                                                transition: {
+                                                    height: {
+                                                        easings: "ease",
+                                                        duration: 0.25,
+                                                    },
+                                                    opacity: {
+                                                        easings: "ease",
+                                                        duration: 0.3,
+                                                    },
+                                                },
+                                            },
+                                        },
+                                    }}>
                                         <AccordionItem
                                             key={"shop details"}
                                             title={"Shop Details"}
@@ -242,7 +277,42 @@ export default function Header() {
                                                 <Input className="max-w-md" label="Shop Description" isRequired variant="flat" />
                                                 <Input className="max-w-md" type="number" isRequired label="Shop Phone" variant="flat" />
                                                 <Input className="max-w-md" label="Shop Email" variant="flat" />
-                                                <Accordion variant="bordered" defaultExpandedKeys={"important details"}>
+                                                <Accordion variant="bordered" defaultExpandedKeys={"important details"} motionProps={{
+                                                    variants: {
+                                                        enter: {
+                                                            y: 0,
+                                                            opacity: 1,
+                                                            height: "auto",
+                                                            transition: {
+                                                                height: {
+                                                                    type: "spring",
+                                                                    stiffness: 500,
+                                                                    damping: 30,
+                                                                    duration: 1,
+                                                                },
+                                                                opacity: {
+                                                                    easings: "ease",
+                                                                    duration: 1,
+                                                                },
+                                                            },
+                                                        },
+                                                        exit: {
+                                                            y: -10,
+                                                            opacity: 0,
+                                                            height: 0,
+                                                            transition: {
+                                                                height: {
+                                                                    easings: "ease",
+                                                                    duration: 0.25,
+                                                                },
+                                                                opacity: {
+                                                                    easings: "ease",
+                                                                    duration: 0.3,
+                                                                },
+                                                            },
+                                                        },
+                                                    },
+                                                }}>
                                                     <AccordionItem key={"important details"} title={"Important Details"}>
                                                         <Input className="max-w-full" label="GSTIN Number" description="USE 22AAAAA0000A1Z5 FORMAT" isRequired variant="flat" />
                                                         <Input className="max-w-full" label="PAN Number" description="USE AAAAA0000A FORMAT" isRequired variant="flat" />
@@ -252,7 +322,7 @@ export default function Header() {
                                             </section>
                                         </AccordionItem>
                                         <AccordionItem key={"bank details"} title={"Bank Details"}>
-                                            <section className="flex flex-wrap gap-1">
+                                            <section className="flex flex-wrap gap-1 justify-center items-center">
 
                                                 <Input className="max-w-md" label="Bank Account Number" description="USE 0000 0000 0000 FORMAT" isRequired variant="flat" />
                                                 <Input className="max-w-md" label="IFSC Code" description="USE 0000 0000 0000 FORMAT" onChange={() => {
@@ -279,7 +349,7 @@ export default function Header() {
                                             key={"social media"}
                                             title="Social Media(Not Required)"
                                         >
-                                            <section className="flex flex-wrap gap-1">
+                                            <section className="flex flex-wrap gap-1 justify-center items-center">
                                                 <Input className="max-w-md" type="url" label="Shop Website" variant="flat" />
                                                 <Input className="max-w-md" type="url" label="Shop Facebook" variant="flat" />
                                                 <Input className="max-w-md" type="url" label="Shop Twitter" variant="flat" />
