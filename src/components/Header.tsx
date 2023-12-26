@@ -1,12 +1,15 @@
 'use client'
 import React, { useEffect, useState } from "react";
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, useDisclosure, ModalContent, Modal, ModalHeader, ModalBody, ModalFooter, Input, Select, SelectItem, Divider } from "@nextui-org/react";
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, useDisclosure, ModalContent, Modal, ModalHeader, ModalBody, ModalFooter, Input, Select, SelectItem, Divider, Accordion, AccordionItem } from "@nextui-org/react";
 import appwriteService from "@/appwrite/config";
 import { useParams, useRouter } from "next/navigation";
 import { Models } from "appwrite";
 import useAuth from "@/context/useAuth";
 import Modals from "@/widgets/Modal";
 import shopCategories from "@/json/shopCategories.json";
+import bankstates from "@/json/states.json";
+// import { } from "module";
+
 
 
 export default function Header() {
@@ -233,19 +236,48 @@ export default function Header() {
                                         <Input className="max-w-xs" label="Shop Description" isRequired variant="flat" />
                                         <Input className="max-w-xs" type="number" isRequired label="Shop Phone" variant="flat" />
                                         <Input className="max-w-xs" label="Shop Email" variant="flat" />
-                                        <Input className="max-w-xs" label="GSTIN Number" isRequired variant="flat" />
-                                    </section>
-                                    <Divider />
-                                    <ModalHeader>
-                                        Social Media (not required)
-                                    </ModalHeader>
-                                    <section className="flex flex-wrap gap-1">
-                                        <Input className="max-w-xs" type="url" label="Shop Website" variant="flat" />
-                                        <Input className="max-w-xs" type="url" label="Shop Facebook" variant="flat" />
-                                        <Input className="max-w-xs" type="url" label="Shop Twitter" variant="flat" />
-                                        <Input className="max-w-xs" type="url" label="Shop Instagram" variant="flat" />
-                                        <Input className="max-w-xs" type="url" label="Shop Youtube" variant="flat" />
-                                        <Input className="max-w-xs" type="url" label="Shop Whatsapp" variant="flat" />
+                                        <Input className="max-w-xs" label="GSTIN Number" description="USE 22AAAAA0000A1Z5 FORMAT" isRequired variant="flat" />
+                                        <Input className="max-w-xs" label="PAN Number" description="USE AAAAA0000A FORMAT" isRequired variant="flat" />
+                                        <Input className="max-w-xs" label="Aadhar Number" description="USE 0000 0000 0000 FORMAT" isRequired variant="flat" />
+                                        <Accordion isCompact variant="bordered">
+                                            <AccordionItem key={"bank details"} title={"Bank Details"}>
+                                                <section className="flex flex-wrap gap-1">
+
+                                                    <Input className="max-w-xs" label="Bank Account Number" description="USE 0000 0000 0000 FORMAT" isRequired variant="flat" />
+                                                    <Input className="max-w-xs" label="IFSC Code" description="USE 0000 0000 0000 FORMAT" onChange={() => {
+                                                    }} isRequired variant="flat" />
+                                                    <Input className="max-w-xs" label="Bank Name" isDisabled variant="flat" />
+                                                    <Input className="max-w-xs" label="Bank Branch" isDisabled variant="flat" />
+                                                    <Input className="max-w-xs" label="Bank Address" isDisabled variant="flat" />
+                                                    <Input className="max-w-xs" label="Bank City" isDisabled variant="flat" />
+                                                    <Select className="max-w-xs" disabled label="Choose bank state">
+                                                        {
+                                                            bankstates.states.map((category) => {
+                                                                return <SelectItem value={category.name} key={category.id}>{category.name}</SelectItem>
+                                                            })
+                                                        }
+                                                    </Select>
+                                                    <Input className="max-w-xs" label="Bank Pincode" isDisabled variant="flat" />
+                                                    <Input className="max-w-xs" label="Bank Phone" isDisabled variant="flat" />
+                                                    <Input className="max-w-xs" label="Bank Email" isDisabled variant="flat" />
+                                                    <Input className="max-w-xs" label="Bank Website" isDisabled variant="flat" />
+                                                </section>
+                                            </AccordionItem>
+
+                                            <AccordionItem
+                                                key={"social media"}
+                                                title="Social Media(Not Required)"
+                                            >
+                                                <section className="flex flex-wrap gap-1">
+                                                    <Input className="max-w-xs" type="url" label="Shop Website" variant="flat" />
+                                                    <Input className="max-w-xs" type="url" label="Shop Facebook" variant="flat" />
+                                                    <Input className="max-w-xs" type="url" label="Shop Twitter" variant="flat" />
+                                                    <Input className="max-w-xs" type="url" label="Shop Instagram" variant="flat" />
+                                                    <Input className="max-w-xs" type="url" label="Shop Youtube" variant="flat" />
+                                                    <Input className="max-w-xs" type="url" label="Shop Whatsapp" variant="flat" />
+                                                </section>
+                                            </AccordionItem>
+                                        </Accordion>
                                     </section>
                                 </form>
                             </ModalBody>
