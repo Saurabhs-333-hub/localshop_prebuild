@@ -12,6 +12,7 @@
     "@nextui-org/react": "^2.2.9",
     "@reduxjs/toolkit": "^1.9.7",
     "appwrite": "^13.0.1",
+    "axios": "^1.6.2",
     "cors": "^2.8.5",
     "framer-motion": "^10.16.16",
     "ifsc": "^2.0.21",

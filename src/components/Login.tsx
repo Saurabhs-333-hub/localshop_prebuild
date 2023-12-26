@@ -1,7 +1,7 @@
 'use client'
 import appwriteService from '@/appwrite/config'
 import { login } from '@/features/authSlice'
-import errorComponentsExtractor from '@/json/methods'
+import {errorComponentsExtractor} from '@/json/methods'
 import { AppDispatch } from '@/context/store'
 import Modals from '@/widgets/Modal'
 import { Button, Card, CardFooter, CardHeader, Divider, Input } from '@nextui-org/react'

@@ -1,3 +1,4 @@
+// import { validate, fetchDetails } from "ifsc";
 const errorComponentsExtractor = (error) => {
     const errorMessage = error
 
@@ -16,4 +17,18 @@ const errorComponentsExtractor = (error) => {
     return {title, description};
 }
 
-export default errorComponentsExtractor;
+const ifscExtractor = (ifsc) => {
+    const ifscCode = ifsc
+// validate(ifscCode)
+// fetchDetails(ifscCode).then(function(res) {
+//     console.log(res);
+//     return res;
+
+// }).catch(function(err) {
+//     console.log(err);
+//     return err;
+// })
+
+}
+
+export  {errorComponentsExtractor, ifscExtractor};

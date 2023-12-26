@@ -8,7 +8,8 @@ import useAuth from "@/context/useAuth";
 import Modals from "@/widgets/Modal";
 import shopCategories from "@/json/shopCategories.json";
 import bankstates from "@/json/states.json";
-// import { } from "module";
+// import { ifscExtractor } from "@/json/methods";
+import axios from "axios";
 
 
 
@@ -16,6 +17,51 @@ export default function Header() {
     const [user, setUser] = useState<Models.Document>()
     const [loader, setLoader] = React.useState(false)
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+    // ifscExtractor(
+    //     "SBIN0000001"
+    // )
+    const [formData, setformData] = React.useState({
+        shopName: "",
+        shopCategory: "",
+        shopAddress: "",
+        shopDescription: "",
+        shopPhone: "",
+        shopEmail: "",
+        gstinNumber: "",
+        panNumber: "",
+        aadharNumber: "",
+        bankAccountNumber: "",
+        ifscCode: "",
+        bankName: "",
+        bankBranch: "",
+        bankAddress: "",
+        bankCity: "",
+        bankState: "",
+        bankPincode: "",
+        bankPhone: "",
+        bankEmail: "",
+        bankWebsite: "",
+        shopWebsite: "",
+        shopFacebook: "",
+        shopTwitter: "",
+        shopInstagram: "",
+        shopYoutube: "",
+        shopWhatsapp: ""
+
+    })
+    const handleInputChange = (fieldName: string, value: string) => {
+        setformData((prevData) => ({
+            ...prevData,
+            [fieldName]: value,
+        }));
+    };
+
+    const handleSelectChange = (fieldName: string, value: string) => {
+        setformData((prevData) => ({
+            ...prevData,
+            [fieldName]: value,
+        }));
+    };
     const router = useRouter()
     const { authStatus } = useAuth()
     const params = useParams()
@@ -262,10 +308,11 @@ export default function Header() {
                                             <section className="flex flex-wrap gap-1 justify-center items-center">
                                                 <Input
                                                     isRequired
-                                                    className="max-w-md"
+                                                    className="max-w-md" onChange={(e) => handleInputChange("shopName", e.target.value)} value={formData.shopName}
                                                     label="Shop Name"
                                                     variant="flat" />
-                                                <Select className="max-w-md" isRequired label="Choose shop category">
+                                                <Select className="max-w-md" value={formData.shopCategory}
+                                                    onChange={(e) => handleSelectChange("shopCategory", e.target.value)} isRequired label="Choose shop category">
                                                     {
                                                         shopCategories.map((category) => {
                                                             return <SelectItem value={category.name} key={category.id}>{category.name}</SelectItem>
@@ -273,10 +320,10 @@ export default function Header() {
                                                     }
                                                 </Select>
 
-                                                <Input className="max-w-md" label="Shop Address" isRequired variant="flat" />
-                                                <Input className="max-w-md" label="Shop Description" isRequired variant="flat" />
-                                                <Input className="max-w-md" type="number" isRequired label="Shop Phone" variant="flat" />
-                                                <Input className="max-w-md" label="Shop Email" variant="flat" />
+                                                <Input className="max-w-md" onChange={(e) => handleInputChange("shopAddress", e.target.value)} value={formData.shopAddress} label="Shop Address" isRequired variant="flat" />
+                                                <Input className="max-w-md" onChange={(e) => handleInputChange("shopDescription", e.target.value)} value={formData.shopDescription} label="Shop Description" isRequired variant="flat" />
+                                                <Input className="max-w-md" onChange={(e) => handleInputChange("shopPhone", e.target.value)} value={formData.shopPhone} type="number" isRequired label="Shop Phone" variant="flat" />
+                                                <Input className="max-w-md" onChange={(e) => handleInputChange("shopEmail", e.target.value)} value={formData.shopEmail} label="Shop Email" variant="flat" />
                                                 <Accordion variant="bordered" defaultExpandedKeys={"important details"} motionProps={{
                                                     variants: {
                                                         enter: {
@@ -314,9 +361,9 @@ export default function Header() {
                                                     },
                                                 }}>
                                                     <AccordionItem key={"important details"} title={"Important Details"}>
-                                                        <Input className="max-w-full" label="GSTIN Number" description="USE 22AAAAA0000A1Z5 FORMAT" isRequired variant="flat" />
-                                                        <Input className="max-w-full" label="PAN Number" description="USE AAAAA0000A FORMAT" isRequired variant="flat" />
-                                                        <Input className="max-w-full" label="Aadhar Number" description="USE 0000 0000 0000 FORMAT" isRequired variant="flat" />
+                                                        <Input className="max-w-full" onChange={(e) => handleInputChange("gstinNumber", e.target.value)} value={formData.gstinNumber} label="GSTIN Number" description="USE 22AAAAA0000A1Z5 FORMAT" isRequired variant="flat" />
+                                                        <Input className="max-w-full" onChange={(e) => handleInputChange("panNumber", e.target.value)} value={formData.panNumber} label="PAN Number" description="USE AAAAA0000A FORMAT" isRequired variant="flat" />
+                                                        <Input className="max-w-full" onChange={(e) => handleInputChange("aadharNumber", e.target.value)} value={formData.aadharNumber} type="number" label="Aadhar Number" description="USE 0000 0000 0000 FORMAT" isRequired variant="flat" />
                                                     </AccordionItem>
                                                 </Accordion>
                                             </section>
@@ -324,24 +371,45 @@ export default function Header() {
                                         <AccordionItem key={"bank details"} title={"Bank Details"}>
                                             <section className="flex flex-wrap gap-1 justify-center items-center">
 
-                                                <Input className="max-w-md" label="Bank Account Number" description="USE 0000 0000 0000 FORMAT" isRequired variant="flat" />
-                                                <Input className="max-w-md" label="IFSC Code" description="USE 0000 0000 0000 FORMAT" onChange={() => {
-                                                }} isRequired variant="flat" />
-                                                <Input className="max-w-md" label="Bank Name" isDisabled variant="flat" />
-                                                <Input className="max-w-md" label="Bank Branch" isDisabled variant="flat" />
-                                                <Input className="max-w-md" label="Bank Address" isDisabled variant="flat" />
-                                                <Input className="max-w-md" label="Bank City" isDisabled variant="flat" />
-                                                <Select className="max-w-md" disabled label="Choose bank state">
+                                                <Input className="max-w-3xl" type="number" onChange={(e) => handleInputChange("bankAccountNumber", e.target.value)} value={formData.bankAccountNumber} label="Bank Account Number" description="USE 0000 0000 0000 FORMAT" isRequired variant="flat" />
+                                                <span className="flex w-full justify-evenly flex-wrap">
+                                                    <Input className="max-w-md" onChange={(e) => {
+                                                        handleInputChange("ifscCode", e.target.value);
+
+                                                    }} value={formData.ifscCode} label="IFSC Code" description="USE 0000 0000 0000 FORMAT" isRequired variant="flat" />
+                                                    <Button onClick={async () => {
+                                                        await axios.get(`https://ifsc.razorpay.com/` + formData.ifscCode).then((res) => {
+                                                            console.log(res.data)
+                                                            handleInputChange("bankName", res.data.BANK);
+                                                            handleInputChange("bankBranch", res.data.BRANCH);
+                                                            handleInputChange("bankAddress", res.data.ADDRESS);
+                                                            handleInputChange("bankCity", res.data.CITY);
+                                                            handleInputChange("bankState", res.data.STATE);
+                                                            handleInputChange("bankPincode", res.data.BANKCODE);
+                                                            handleInputChange("bankPhone", res.data.CONTACT);
+                                                            handleInputChange("bankEmail", res.data.EMAIL);
+                                                            handleInputChange("bankWebsite", res.data.WEBSITE);
+                                                        }).catch((err) => {
+                                                            console.log(err)
+                                                        }
+                                                        )
+                                                    }} color="primary" variant="flat">Get Bank Details</Button></span>
+                                                <Input className="max-w-md" onChange={(e) => handleInputChange("bankName", e.target.value)} value={formData.bankName} label="Bank Name" isDisabled variant="flat" />
+                                                <Input className="max-w-md" onChange={(e) => handleInputChange("bankBranch", e.target.value)} value={formData.bankBranch} label="Bank Branch" isDisabled variant="flat" />
+                                                <Input className="max-w-md" onChange={(e) => handleInputChange("bankAddress", e.target.value)} value={formData.bankAddress} label="Bank Address" isDisabled variant="flat" />
+                                                <Input className="max-w-md" onChange={(e) => handleInputChange("bankCity", e.target.value)} value={formData.bankCity} label="Bank City" isDisabled variant="flat" />
+                                                <Select className="max-w-md" value={formData.bankState}
+                                                    onChange={(e) => handleSelectChange("bankState", e.target.value)} disabled label="Choose bank state">
                                                     {
                                                         bankstates.states.map((category) => {
                                                             return <SelectItem value={category.name} key={category.id}>{category.name}</SelectItem>
                                                         })
                                                     }
                                                 </Select>
-                                                <Input className="max-w-md" label="Bank Pincode" isDisabled variant="flat" />
-                                                <Input className="max-w-md" label="Bank Phone" isDisabled variant="flat" />
-                                                <Input className="max-w-md" label="Bank Email" isDisabled variant="flat" />
-                                                <Input className="max-w-md" label="Bank Website" isDisabled variant="flat" />
+                                                <Input className="max-w-md" onChange={(e) => handleInputChange("bankPincode", e.target.value)} value={formData.bankPincode} isDisabled label="Bank Code" variant="flat" />
+                                                <Input className="max-w-md" onChange={(e) => handleInputChange("bankPhone", e.target.value)} value={formData.bankPhone} label="Bank Phone" variant="flat" />
+                                                <Input className="max-w-md" onChange={(e) => handleInputChange("bankEmail", e.target.value)} value={formData.bankEmail} label="Bank Email" variant="flat" />
+                                                <Input className="max-w-md" onChange={(e) => handleInputChange("bankWebsite", e.target.value)} value={formData.bankWebsite} label="Bank Website" variant="flat" />
                                             </section>
                                         </AccordionItem>
 
@@ -350,12 +418,12 @@ export default function Header() {
                                             title="Social Media(Not Required)"
                                         >
                                             <section className="flex flex-wrap gap-1 justify-center items-center">
-                                                <Input className="max-w-md" type="url" label="Shop Website" variant="flat" />
-                                                <Input className="max-w-md" type="url" label="Shop Facebook" variant="flat" />
-                                                <Input className="max-w-md" type="url" label="Shop Twitter" variant="flat" />
-                                                <Input className="max-w-md" type="url" label="Shop Instagram" variant="flat" />
-                                                <Input className="max-w-md" type="url" label="Shop Youtube" variant="flat" />
-                                                <Input className="max-w-md" type="url" label="Shop Whatsapp" variant="flat" />
+                                                <Input className="max-w-md" onChange={(e) => handleInputChange("shopWebsite", e.target.value)} value={formData.shopWebsite} type="url" label="Shop Website" variant="flat" />
+                                                <Input className="max-w-md" onChange={(e) => handleInputChange("shopFacebook", e.target.value)} value={formData.shopFacebook} type="url" label="Shop Facebook" variant="flat" />
+                                                <Input className="max-w-md" onChange={(e) => handleInputChange("shopTwitter", e.target.value)} value={formData.shopTwitter} type="url" label="Shop Twitter" variant="flat" />
+                                                <Input className="max-w-md" onChange={(e) => handleInputChange("shopInstagram", e.target.value)} value={formData.shopInstagram} type="url" label="Shop Instagram" variant="flat" />
+                                                <Input className="max-w-md" onChange={(e) => handleInputChange("shopYoutube", e.target.value)} value={formData.shopYoutube} type="url" label="Shop Youtube" variant="flat" />
+                                                <Input className="max-w-md" onChange={(e) => handleInputChange("shopWhatsapp", e.target.value)} value={formData.shopWhatsapp} type="url" label="Shop Whatsapp" variant="flat" />
                                             </section>
                                         </AccordionItem>
                                     </Accordion>

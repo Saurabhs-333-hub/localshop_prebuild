@@ -4,7 +4,7 @@ import Modals from '@/widgets/Modal'
 import { Button, Card, CardFooter, CardHeader, Divider, Image, Input } from '@nextui-org/react'
 import Link from 'next/link'
 import React, { useRef } from 'react'
-import errorComponentsExtractor from "@/json/methods.js";
+import {errorComponentsExtractor} from "@/json/methods.js";
 import NextImage from 'next/image'
 import { useRouter } from 'next/navigation'
 import avatar from '@/assets/user_avatar.png'
