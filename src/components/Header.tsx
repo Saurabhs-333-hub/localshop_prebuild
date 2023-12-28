@@ -278,7 +278,9 @@ export default function Header() {
 
                                 </div>
                             </DropdownItem>
-                            {isUserHasShop ? <DropdownItem key="dashboard" className='text-success' color='success' >Dash Board</DropdownItem> : <DropdownItem key="selleraccount" className='text-success' color='success' onClick={onOpen}>Become a Seller! 💰</DropdownItem>}
+                            {isUserHasShop ? <DropdownItem key="dashboard" className='text-success' color='success' onClick={() => {
+                                router.push('/dashboard')
+                            }}>Dash Board</DropdownItem> : <DropdownItem key="selleraccount" className='text-success' color='success' onClick={onOpen}>Become a Seller! 💰</DropdownItem>}
                             <DropdownItem key="settings" showDivider>Settings</DropdownItem>
                             <DropdownItem key="system">System</DropdownItem>
                             <DropdownItem key="configurations">Configurations</DropdownItem>

@@ -1,6 +1,7 @@
 'use client'
 import { redirect, useRouter } from 'next/navigation'
 import useAuth from '@/context/useAuth'
+import { useEffect } from 'react'
 
 
 
@@ -12,10 +13,18 @@ export default function ProtectedPageLayout({
 }) {
     const { authStatus } = useAuth()
     const router = useRouter()
-    if (!authStatus) {
-        redirect("/auth/login")
-        return <></>;
+    useEffect((): any => {
+        if (!authStatus) {
+            // router.replace("/auth/login");
+            redirect("/auth/login")
+            return <></>;
+        }
     }
+    );
+    // if (!authStatus) {
+    //     redirect("/auth/login")
+    //     return <></>;
+    // }
     return <div className='flex flex-col'>
         {children}
     </div>;

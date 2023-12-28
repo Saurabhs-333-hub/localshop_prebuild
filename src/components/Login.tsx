@@ -2,7 +2,6 @@
 import appwriteService from '@/appwrite/config'
 import { login } from '@/features/authSlice'
 import { errorComponentsExtractor } from '@/json/methods'
-import { AppDispatch } from '@/context/store'
 import Modals from '@/widgets/Modal'
 import { Button, Card, CardFooter, CardHeader, Divider, Input } from '@nextui-org/react'
 import Link from 'next/link'
@@ -23,7 +22,6 @@ const Login = () => {
     const [errorTitle, setErrorTitle] = React.useState('')
     const [errorDescription, setErrorDescription] = React.useState('')
     const [loading, setLoading] = React.useState(false)
-    const dispatch = useDispatch<AppDispatch>()
     const router = useRouter()
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -32,7 +30,6 @@ const Login = () => {
             setErrorDescription('')
             setLoading(true)
             await appwriteService.loginUser(formData)
-            dispatch(login(formData))
             setLoading(false)
             const res = NextResponse.json({
                 message: 'Login successful'
