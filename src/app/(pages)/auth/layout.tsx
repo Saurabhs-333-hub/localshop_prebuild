@@ -5,6 +5,7 @@ import Header from '@/components/Header'
 import appwriteService from '@/appwrite/config'
 import { useEffect, useState } from 'react'
 import { AuthProvider } from '@/context/AuthContext'
+import ProfileHeader from '@/components/ProfileHeader'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -28,13 +29,13 @@ export default function PageLayout({
             .finally(() => setLoader(false));
     }, []);
     return (
-        <AuthProvider value={{ authStatus, setAuthStatus }}>
-            <>
-                {/* <Header /> */}
-                <div className="flex item-center justify-center w-full h-screen">
-                    {children}
-                </div>
-            </>
-        </AuthProvider>
+
+        <div className='flex flex-col'>
+            <ProfileHeader/>
+            <div className="flex item-center justify-center w-full h-screen">
+                {children}
+            </div>
+        </div>
+
     )
 }

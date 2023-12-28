@@ -16,6 +16,7 @@ import { errorComponentsExtractor } from "@/json/methods";
 export default function Header() {
     const [user, setUser] = useState<Models.Document>()
     const [loader, setLoader] = React.useState(false)
+    const [userLoading, setUserLoading] = React.useState(false)
     const [errorTitle, setErrorTitle] = React.useState('')
     const [errorDescription, setErrorDescription] = React.useState('')
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -103,8 +104,10 @@ export default function Header() {
     useEffect(() => {
         (async () => {
             try {
+                setUserLoading(true)
                 const res = await appwriteService.getUserData()
                 setUser(res)
+                setUserLoading(false)
                 console.log(res.profilePic)
             } catch (error) {
 
@@ -132,10 +135,12 @@ export default function Header() {
     useEffect(() => {
         (async () => {
             try {
+                // setUserLoading(true)
                 const res = await appwriteService.isLoggedIn();
                 setIsUser(res);
                 const response = await appwriteService.getShop();
                 setIsUserHasShop(response);
+                // setUserLoading(false)
             } catch (error) {
                 setIsUserHasShop(false);
             }
@@ -248,12 +253,17 @@ export default function Header() {
 
 
             </NavbarMenu>
-            {authStatus == false || isuser == null || user == null ? <NavbarContent justify="end"> <NavbarItem>
+            {authStatus == false || isuser == false ? <NavbarContent justify="end"> <NavbarItem>
                 <Button color="primary" onClick={() => {
                     router.push('/auth/login')
                 }} variant="flat">
                     Login
                 </Button>
+            </NavbarItem>
+            </NavbarContent> : user == null ? <NavbarContent justify="end"> <NavbarItem>
+                <Avatar placeholder="true">
+                    Loading...
+                </Avatar>
             </NavbarItem>
             </NavbarContent>
                 : <NavbarContent as="div" justify="end">

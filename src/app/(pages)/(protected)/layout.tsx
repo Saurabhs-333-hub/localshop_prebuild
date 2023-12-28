@@ -2,6 +2,7 @@
 import { redirect, useRouter } from 'next/navigation'
 import useAuth from '@/context/useAuth'
 import { useEffect } from 'react'
+import Header from '@/components/Header'
 
 
 
@@ -26,6 +27,7 @@ export default function ProtectedPageLayout({
     //     return <></>;
     // }
     return <div className='flex flex-col'>
+        <Header/>
         {children}
     </div>;
 }
