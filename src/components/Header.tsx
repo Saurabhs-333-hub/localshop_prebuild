@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, useDisclosure, ModalContent, Modal, ModalHeader, ModalBody, ModalFooter, Input, Select, SelectItem, Divider, Accordion, AccordionItem } from "@nextui-org/react";
 import appwriteService from "@/appwrite/config";
-import { useParams, useRouter } from "next/navigation";
+import { redirect, useParams, useRouter } from "next/navigation";
 import { Models } from "appwrite";
 import useAuth from "@/context/useAuth";
 import Modals from "@/widgets/Modal";
@@ -68,15 +68,20 @@ export default function Header() {
                 formData.bankAccountNumber.length > 8 && formData.ifscCode.length > 6 && formData.shopName !== '' &&
                 formData.shopCategory !== '' && formData.shopAddress !== '' && formData.shopDescription !== '' && formData.shopPhone.length > 8
             ) {
-                // setInvalidDetails(false)
-                setLoader(true)
-                const res = await appwriteService.registerShop(formData)
-                setLoader(false)
-                console.log(res)
+                if (isUserHasShop) {
+                    setErrorTitle('Already Registered')
+                    setErrorDescription('You have already registered your shop')
+                } else {
+                    setLoader(true)
+                    const res = await appwriteService.registerShop(formData)
+                    setLoader(false)
+                    onClose()
+                    redirect('/dashboard')
+                    console.log(res)
+                }
             } else {
                 setErrorTitle('Invalid Details')
                 setErrorDescription('Please check your details again')
-                // setInvalidDetails(true)
             }
         } catch (error: any) {
             console.log(error)
@@ -273,7 +278,7 @@ export default function Header() {
 
                                 </div>
                             </DropdownItem>
-                            {isUserHasShop ? <DropdownItem key="dashboard" className='text-success' color='success' >Dash Board</DropdownItem> : <DropdownItem key="selleraccount" className='text-success' color='success' onClick={onOpen}>Seller Account</DropdownItem>}
+                            {isUserHasShop ? <DropdownItem key="dashboard" className='text-success' color='success' >Dash Board</DropdownItem> : <DropdownItem key="selleraccount" className='text-success' color='success' onClick={onOpen}>Become a Seller! 💰</DropdownItem>}
                             <DropdownItem key="settings" showDivider>Settings</DropdownItem>
                             <DropdownItem key="system">System</DropdownItem>
                             <DropdownItem key="configurations">Configurations</DropdownItem>
