@@ -13,12 +13,11 @@ const Dashboard = () => {
         <>
             <div className="flex w-full items-center flex-col">
                 <Tabs aria-label="Options"
-                className='w-full'
                     selectedKey={selected}
                     onSelectionChange={(e) => setSelected(e.toString())} color="secondary" variant="bordered">
                     <Tab
                         key="addproduct"
-                        className='w-full'
+                        className=''
                         title={
                             <div className="flex items-center space-x-2">
                                 <span className='text-2xl'><TbSquareRoundedPlus /></span>

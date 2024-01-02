@@ -9,23 +9,23 @@ const AddProduct = () => {
     const [createProduct, setCreateProduct] = React.useState(false)
     const [isCreatingProduct, setIsCreatingProduct] = React.useState(false);
     const productID = v4()
+    let newProductID;
     const createProductHandler = async () => {
         try {
-
+            if (localStorage.getItem('productID') != '' && localStorage.getItem('productID')) {
+                const res = await appwriteService.deleteProduct({ product_id: localStorage.getItem('productID') as ID })
+                console.log(res)
+            }
             setIsCreatingProduct(true)
             const seller = await appwriteService.getUserData()
             const res = await appwriteService.addProduct(
                 { product_id: productID, seller_id: seller.$id, name: "", description: "", category_id: "", sub_category_id: "", brand: "", sku: "", quantity: 0, price: "", sale_price: "", main_image: "", additional_images: [], size: "", color: "", material: "", style: "", packaging: "", features: "", warranty: "", return_policy: true, health_safety: "" }
-            );
-            console.log(res)
+            ).then((res) => {
+                newProductID = localStorage.setItem('productID', productID)
+                console.log(res)
+            });
             setIsCreatingProduct(false)
             setCreateProduct(true)
-            if (localStorage.getItem('productID') != '') {
-                const res = await appwriteService.deleteProduct({ product_id: localStorage.getItem('productID') as ID })
-                localStorage.setItem('productID', '')
-                console.log(res)
-            }
-            localStorage.setItem('productID', productID)
         } catch (error) {
             console.log(error)
         } finally {
@@ -33,7 +33,7 @@ const AddProduct = () => {
         }
     }
     return (
-        <div className='w-full max-h-[90vh] flex flex-wrap'>
+        <div className='w-full h-full flex flex-wrap'>
             {
                 !createProduct && <div className="w-max-[50px]">
                     {!isCreatingProduct ? <Button
@@ -74,11 +74,22 @@ const AddProduct = () => {
                         </Button>}
                 </div>}
             {createProduct &&
-                <>
-                    <AddProductNameDescriptionBrand productID={productID} />
-                    <AddProductNameDescriptionBrand productID={productID} />
+                <div className='w-full flex flex-wrap justify-center' style={{
+                    gap: '1rem',
+                    height: '82vh',
+                    overflowY: 'scroll',
+                }}>
+                    <AddProductNameDescriptionBrand productID={localStorage.getItem('productID')} />
+                    {/* <AddProductNameDescriptionBrand productID={newProductID} /> */}
+                    {/* <AddProductNameDescriptionBrand productID={newProductID} /> */}
+                    {/* <AddProductNameDescriptionBrand productID={newProductID} /> */}
+                    {/* <AddProductNameDescriptionBrand productID={newProductID} /> */}
+                    {/* <AddProductNameDescriptionBrand productID={productID} /> */}
+                    {/* <AddProductNameDescriptionBrand productID={newProductID} /> */}
 
-                </>
+
+
+                </div>
             }
         </div>
     )
