@@ -50,7 +50,7 @@ export class AppwriteService {
             console.log('fen' + profileImage.file)
             const res = await storage.createFile("6577c442991fb8f4fd50", profileImage.id, profileImage.file,);
             const fileUrl = storage.getFilePreview("6577c442991fb8f4fd50", profileImage.id)
-            const userSaved = await database.createDocument("65576297141df7832e98", "6557640249fc55d337be", $id, {
+            const userSaved = await database.createDocument("65576297141df7832e98", `${process.env.NEXT_PUBLIC_UC_ID}`, $id, {
                 "name": name,
                 "email": email,
                 "password": password,
@@ -90,7 +90,7 @@ export class AppwriteService {
                 success: true
             })
 
-            await database.updateDocument("65576297141df7832e98", "6557640249fc55d337be", res.userId, {
+            await database.updateDocument("65576297141df7832e98", `${process.env.NEXT_PUBLIC_UC_ID}`, res.userId, {
                 "ip": res.ip.toString(),
                 "osCode": res.osCode.toString(),
                 "osName": res.osName.toString(),
@@ -151,7 +151,7 @@ export class AppwriteService {
     async getUserData() {
         try {
             const res = await account.get();
-            const user = await database.getDocument("65576297141df7832e98", "6557640249fc55d337be", res.$id)
+            const user = await database.getDocument("65576297141df7832e98", `${process.env.NEXT_PUBLIC_UC_ID}`, res.$id)
             console.log(user)
             return user
         } catch (error) {
@@ -195,7 +195,7 @@ export class AppwriteService {
         shopWhatsapp, }: any) {
         try {
             const user = await account.get();
-            const res = await database.createDocument("65576297141df7832e98", "658b4a0b26068c4e28e7", user.$id, {
+            const res = await database.createDocument("65576297141df7832e98", `${process.env.NEXT_PUBLIC_SSHOPSC_ID}`, user.$id, {
                 "shopId": v4(),
                 "shopName": shopName,
                 "shopCategory": shopCategory,
@@ -233,7 +233,7 @@ export class AppwriteService {
     async getShop() {
         try {
             const user = await account.get();
-            const res = await database.getDocument("65576297141df7832e98", "658b4a0b26068c4e28e7", user.$id)
+            const res = await database.getDocument("65576297141df7832e98", `${process.env.NEXT_PUBLIC_SSHOPSC_ID}`, user.$id)
             if (res) {
                 return true
             } else {
@@ -241,6 +241,108 @@ export class AppwriteService {
             }
         } catch (error) {
             throw new Error(`Error getting shop: ${error}`);
+        }
+    }
+
+    async addProduct({
+        product_id,
+        seller_id,
+        name,
+        description,
+        category_id,
+        sub_category_id,
+        brand,
+        sku,
+        quantity,
+        price,
+        sale_price,
+        main_image,
+        additional_images,
+        size,
+        color,
+        material,
+        style,
+        packaging,
+        features,
+        warranty,
+        return_policy,
+        health_safety
+    }: any) {
+        try {
+            const res = await database.createDocument("65576297141df7832e98", `${process.env.NEXT_PUBLIC_SPC_ID}`, product_id, {
+                "seller_id": seller_id,
+                "name": name,
+                "description": description,
+                "category_id": category_id,
+                "sub_category_id": sub_category_id,
+                "brand": brand,
+                "sku": sku,
+                "quantity": quantity,
+                "price": price,
+                "sale_price": sale_price,
+                "main_image": main_image,
+                "additional_images": additional_images,
+                "size": size,
+                "color": color,
+                "material": material,
+                "style": style,
+                "packaging": packaging,
+                "features": features,
+                "warranty": warranty,
+                "return_policy": return_policy,
+                "health_safety": health_safety
+            })
+            return res
+        } catch (error) {
+            throw new Error(`Error adding product: ${error}`);
+        }
+    }
+    async deleteProduct({ product_id }: any) {
+        try {
+            const res = await database.deleteDocument("65576297141df7832e98",
+                `${process.env.NEXT_PUBLIC_SPC_ID}`,
+                product_id)
+            return res
+        } catch (error) {
+            throw new Error(`Error deleting product: ${error}`);
+        }
+    }
+
+    async getProduct({ product_id }: any) {
+        try {
+            const res = await database.getDocument("65576297141df7832e98",
+                `${process.env.NEXT_PUBLIC_SPC_ID}`,
+                product_id)
+            return res
+        } catch (error) {
+            throw new Error(`Error getting product: ${error}`);
+        }
+    }
+    async updateProductNameDescriptionBrand({ product_id, name, description, brand }: any) {
+        try {
+            const res = await database.updateDocument("65576297141df7832e98",
+                `${process.env.NEXT_PUBLIC_SPC_ID}`
+                , product_id, {
+                "name": name,
+                "description": description,
+                "brand": brand,
+            })
+            return res
+        } catch (error) {
+            throw new Error(`Error updating product: ${error}`);
+        }
+    }
+    async updateProductPrice({ product_id, price, sale_price }: any) {
+        try {
+            const res = await database.updateDocument("65576297141df7832e98",
+                `${process.env.NEXT_PUBLIC_SPC_ID}`
+                , product_id, {
+                "price": price,
+                "sale_price": sale_price,
+            })
+            return res
+        } catch (error) {
+            throw new Error(`Error updating product: ${error}`);
         }
     }
 }

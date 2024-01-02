@@ -26,7 +26,7 @@ export default function ProtectedPageLayout({
     //     redirect("/auth/login")
     //     return <></>;
     // }
-    return <div className='flex flex-col'>
+    return <div className='flex flex-col w-screen'>
         <Header/>
         {children}
     </div>;
