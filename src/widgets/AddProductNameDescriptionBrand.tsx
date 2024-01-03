@@ -8,10 +8,12 @@ const AddProductNameDescriptionBrand = ({ productID }: any) => {
         description: "",
         brand: "",
     })
-    const [isSaved, setIsSaved] = React.useState(false)
+    const [isNotSaved, setIsNotSaved] = React.useState(true)
     const [isSaving, setIsSaving] = React.useState(false)
+    const [isEdit, setIsEdit] = React.useState(false)
     const saveProductHandler = async () => {
         try {
+            setIsNotSaved(true)
             console.log(productID)
             setIsSaving(true)
             const res = await appwriteService.updateProductNameDescriptionBrand({
@@ -22,11 +24,13 @@ const AddProductNameDescriptionBrand = ({ productID }: any) => {
             })
             console.log(res)
             setIsSaving(false)
-            setIsSaved(true)
+            setIsNotSaved(false)
+            // setIsEdit(true)
         } catch (error) {
             console.log(error)
         } finally {
             setIsSaving(false)
+            // setIsNotSaved(true)
         }
     }
     return (
@@ -35,15 +39,15 @@ const AddProductNameDescriptionBrand = ({ productID }: any) => {
                 minWidth: '480px',
             }}
         >
-            <CardBody className='gap-2'>
+            {isNotSaved === true ? <CardBody className='gap-2'>
                 <Input
-                    isDisabled={isSaved}
+                    isDisabled={!isNotSaved}
                     label="Product Name"
                     value={data.name}
                     onChange={(e) => setData({ ...data, name: e.target.value })}
                 />
                 <Textarea
-                    isDisabled={isSaved}
+                    isDisabled={!isNotSaved}
                     label="Product Description"
                     maxLength={200}
                     maxRows={10}
@@ -51,25 +55,27 @@ const AddProductNameDescriptionBrand = ({ productID }: any) => {
                     onChange={(e) => setData({ ...data, description: e.target.value })}
                 />
                 <Input
-                    isDisabled={isSaved}
+                    isDisabled={!isNotSaved}
                     label="Product Brand"
                     value={data.brand}
                     onChange={(e) => setData({ ...data, brand: e.target.value })}
                 />
-            </CardBody>
+            </CardBody> : <CardBody className='gap-2'>
+            </CardBody>}
             <CardFooter>
                 <div className="flex justify-end">
-                    {!isSaved ? <Button
+                    {isNotSaved === true ? <Button
+                        isDisabled={isSaving}
                         className='btn btn-primary'
                         onClick={saveProductHandler}
                     >
-                        Save
+                        {isSaving ? "Saving..." : "Save"}
                     </Button> :
                         <Button
                             className='btn btn-primary'
-                            hidden={!isSaving}
+                            onClick={() => setIsNotSaved(true)}
                         >
-                            Saving...
+                            Edit
                         </Button>}
                 </div>
             </CardFooter>

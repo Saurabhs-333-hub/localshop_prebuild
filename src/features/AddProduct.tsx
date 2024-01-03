@@ -13,8 +13,11 @@ const AddProduct = () => {
     const createProductHandler = async () => {
         try {
             if (localStorage.getItem('productID') != '' && localStorage.getItem('productID')) {
-                const res = await appwriteService.deleteProduct({ product_id: localStorage.getItem('productID') as ID })
-                console.log(res)
+                const product = await appwriteService.getProduct({ product_id: localStorage.getItem('productID') as ID })
+                if (product.name == '' || product.description == '' || product.brand == '' || product.category_id == '' || product.sub_category_id == '' || product.quantity == 0 || product.price == '' || product.sale_price == '' || product.main_image == '' || product.size == '' || product.color == '' || product.features == '' || product.return_policy == '') {
+                    const res = await appwriteService.deleteProduct({ product_id: localStorage.getItem('productID') as ID })
+                    console.log(res)
+                }
             }
             setIsCreatingProduct(true)
             const seller = await appwriteService.getUserData()
@@ -78,13 +81,17 @@ const AddProduct = () => {
                     gap: '1rem',
                     height: '82vh',
                     overflowY: 'scroll',
+                    // display: "grid",
+                    // gridTemplateColumns: '1fr 1fr 1fr',
+                    // gridTemplateColumns: 'repeat(auto-fit, minmax(500px, 1fr))',
+                    // gridAutoColumns: 'minmax(500px, auto)'
                 }}>
                     <AddProductNameDescriptionBrand productID={localStorage.getItem('productID')} />
-                    {/* <AddProductNameDescriptionBrand productID={newProductID} /> */}
-                    {/* <AddProductNameDescriptionBrand productID={newProductID} /> */}
-                    {/* <AddProductNameDescriptionBrand productID={newProductID} /> */}
-                    {/* <AddProductNameDescriptionBrand productID={newProductID} /> */}
-                    {/* <AddProductNameDescriptionBrand productID={productID} /> */}
+                    <AddProductNameDescriptionBrand productID={newProductID} />
+                    <AddProductNameDescriptionBrand productID={newProductID} />
+                    <AddProductNameDescriptionBrand productID={newProductID} />
+                    <AddProductNameDescriptionBrand productID={newProductID} />
+                    <AddProductNameDescriptionBrand productID={productID} />
                     {/* <AddProductNameDescriptionBrand productID={newProductID} /> */}
 
 
