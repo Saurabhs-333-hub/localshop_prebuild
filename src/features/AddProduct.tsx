@@ -77,9 +77,9 @@ const AddProduct = () => {
                         </Button>}
                 </div>}
             {createProduct &&
-                <div className='w-full flex flex-wrap justify-center' style={{
+                <div className='w-full h-fit flex flex-wrap justify-center' style={{
                     gap: '1rem',
-                    height: '82vh',
+                    maxHeight: '82vh',
                     overflowY: 'scroll',
                     // display: "grid",
                     // gridTemplateColumns: '1fr 1fr 1fr',
@@ -87,12 +87,6 @@ const AddProduct = () => {
                     // gridAutoColumns: 'minmax(500px, auto)'
                 }}>
                     <AddProductNameDescriptionBrand productID={localStorage.getItem('productID')} />
-                    <AddProductNameDescriptionBrand productID={newProductID} />
-                    <AddProductNameDescriptionBrand productID={newProductID} />
-                    <AddProductNameDescriptionBrand productID={newProductID} />
-                    <AddProductNameDescriptionBrand productID={newProductID} />
-                    <AddProductNameDescriptionBrand productID={productID} />
-                    {/* <AddProductNameDescriptionBrand productID={newProductID} /> */}
 
 
 
